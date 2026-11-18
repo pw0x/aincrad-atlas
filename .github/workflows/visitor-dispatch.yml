@@ -1,0 +1,32 @@
+name: Dispatch visitor feedback
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3-58/5 * * * *'
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: visitor-feedback-dispatch
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    if: github.ref == 'refs/heads/main' && vars.ATLAS_PUBLIC_ORIGIN != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Reconcile visitor observations and refresh public progress
+        env:
+          ATLAS_PUBLIC_ORIGIN: ${{ vars.ATLAS_PUBLIC_ORIGIN }}
+          ATLAS_WORKER_SECRET: ${{ secrets.ATLAS_WORKER_SECRET }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 server/dispatcher.py
