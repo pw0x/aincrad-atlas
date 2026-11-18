@@ -1,5 +1,5 @@
 [Unit]
-Description=Snapshot Aincrad Atlas visitor evidence and queue
+Description=Snapshot archived Aincrad Atlas issue evidence
 ConditionPathExists=/var/lib/aincrad-atlas/atlas.sqlite3
 
 [Service]

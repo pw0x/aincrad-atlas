@@ -1,16 +1,15 @@
 [Unit]
-Description=Aincrad Atlas visitor reports and development progress
+Description=Aincrad Atlas release version and archived scene evidence
 After=network-online.target
 
 [Service]
 User=aincrad-api
 Group=aincrad-api
 WorkingDirectory=/srv/aincrad-atlas/current
-EnvironmentFile=/etc/aincrad-atlas/api.env
+Environment=ATLAS_STATE_DIR=/var/lib/aincrad-atlas
+EnvironmentFile=-/etc/aincrad-atlas/api.env
 EnvironmentFile=/srv/aincrad-atlas/current/revision.env
 Environment=PYTHONDONTWRITEBYTECODE=1
-Environment=ATLAS_MIN_FREE_BYTES=1073741824
-Environment=ATLAS_MAX_STATE_BYTES=805306368
 ExecStart=/usr/bin/python3 /srv/aincrad-atlas/current/server/atlas.py serve
 Restart=on-failure
 RestartSec=2

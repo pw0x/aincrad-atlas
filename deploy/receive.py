@@ -21,8 +21,9 @@ from urllib.request import ProxyHandler, build_opener
 ROOT = Path('/srv/aincrad-atlas')
 SHA = re.compile('[a-f0-9]{40}')
 HASHED_ASSET = re.compile(r'.+-[a-zA-Z0-9_-]{8}\.[a-zA-Z0-9]+(?:\.gz)?')
-BACKEND = {'server/atlas.py', 'server/feedback.py', 'server/dispatcher.py'}
-REQUIRED = BACKEND | {'dist/index.html', 'dist/portal.html', 'dist/floor-01.html', 'dist/floor-22.html', 'deploy-run.txt'}
+# Older CI builds included the dispatcher modules. Their archives can still be retried.
+ALLOWED_BACKEND = {'server/atlas.py', 'server/feedback.py', 'server/dispatcher.py'}
+REQUIRED = {'server/atlas.py', 'dist/index.html', 'dist/floor-01.html', 'dist/floor-22.html', 'deploy-run.txt'}
 MAX_ARCHIVE = 256 * 1024 * 1024
 KEEP = 5
 
@@ -53,13 +54,13 @@ def unpack(archive, tree):
             if (len(name) > 240 or any(p in ('', '.', '..') or p.startswith('.') for p in parts)
                     or '\\' in name or any(ord(c) < 32 or ord(c) == 127 for c in name)):
                 raise ValueError('Invalid archive path')
-            allowed = (parts[0] == 'dist' or name in BACKEND or name in ('server', 'deploy-run.txt'))
+            allowed = (parts[0] == 'dist' or name in ALLOWED_BACKEND or name in ('server', 'deploy-run.txt'))
             if not allowed or name in seen or len(seen) >= 4096:
                 raise ValueError('Unexpected archive entry')
             seen.add(name)
             path = tree.joinpath(*parts)
             if item.type == tarfile.DIRTYPE:
-                if name in BACKEND or name == 'deploy-run.txt' or item.size:
+                if name in ALLOWED_BACKEND or name == 'deploy-run.txt' or item.size:
                     raise ValueError('Invalid directory')
                 path.mkdir(parents=True, exist_ok=True)
                 continue

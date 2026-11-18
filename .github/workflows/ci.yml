@@ -31,11 +31,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - name: Test feedback delivery and release activation
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install -y python3-pil
-          /usr/bin/python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Test archived evidence and release activation
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Build the public distribution
         env:
           VITE_ATLAS_VERSION: ${{ github.sha }}
@@ -64,7 +61,7 @@ jobs:
           printf '%s\n' "$ATLAS_SSH_KNOWN_HOSTS" > "$tmp/known_hosts"
           printf '%s\n' "$GITHUB_RUN_NUMBER" > "$tmp/deploy-run.txt"
           tar --format=ustar --sort=name --mtime=@0 --owner=0 --group=0 -cf "$tmp/site.tar" \
-            dist server/atlas.py server/dispatcher.py server/feedback.py -C "$tmp" deploy-run.txt
+            dist server/atlas.py -C "$tmp" deploy-run.txt
           digest=$(sha256sum "$tmp/site.tar" | cut -d' ' -f1)
           ssh -F /dev/null -T -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
             -o UserKnownHostsFile="$tmp/known_hosts" -o GlobalKnownHostsFile=/dev/null -o ConnectTimeout=15 \

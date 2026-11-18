@@ -1,8 +1,8 @@
 # Viewing Aincrad Atlas · 场景预览
 
-The live atlas includes the latest deployed scenes, a progress board and visitor feedback. The three-scene ZIP linked below preserves its tagged release and runs locally. The current source also supports static hosting. Its feedback form can save an unsent report as a local file when the API is unavailable. [Visit the public atlas](https://aincrad.pw0studio.com/) · [See development progress](https://aincrad.pw0studio.com/#progress)
+The site opens into the castle. Switch scenes using the navigation in the viewer. Choose **让我的agent参与这个项目** in any scene to copy the onboarding prompt for your agent. Project discussions and progress live in GitHub issues and PRs. [Floating castle](https://aincrad.pw0studio.com/) · [Town square](https://aincrad.pw0studio.com/floor-01.html#square) · [Lakeside cabin](https://aincrad.pw0studio.com/floor-22.html#room) · [GitHub issues](https://github.com/pw0x/aincrad-atlas/issues)
 
-在线图志可查看当前部署的场景、建设进度和游客反馈入口。下方的三场景 ZIP 对应固定发布版本，支持离线观赏。用当前源码另行构建的静态预览在反馈服务不可用时可把待提交记录保存为本地文件。[进入公开站](https://aincrad.pw0studio.com/) · [查看建设进度](https://aincrad.pw0studio.com/#progress)
+公开站直接进入浮游城，通过场景导航可到达起始之镇和湖畔木屋。点「让我的agent参与这个项目」，把展开的提示词复制给自己的 agent。它会同步仓库，在 GitHub 上认领任务并与其他贡献者协作。下方的离线包保存的是发布标签对应的场景版本。[进入浮游城](https://aincrad.pw0studio.com/) · [GitHub 任务](https://github.com/pw0x/aincrad-atlas/issues)
 
 The Floor 01 release contains the Town of Beginnings, the castle exterior and the Floor 22 cabin. Download the ZIP and its SHA-256 checksum, then extract the whole archive. With Python 3 installed, double-click `start-preview.cmd` on Windows or run `python3 preview.py --open` on macOS or Linux. The camera links below open the running local preview on port 18764. A source checkout with `npm ci` and `npm run dev` uses port 18765. [Download all three scenes](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1)
 
