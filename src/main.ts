@@ -4,7 +4,6 @@ import { DetailRegions, disposeObjects } from './runtime/resources'
 import { createFinish } from './runtime/finish'
 import type { View, WorldContext } from './runtime/api'
 import { shell, type World } from './runtime/shell'
-import { sceneFeedback, snapshot } from './runtime/feedback'
 import { readPose, type CameraPose } from './runtime/camera-pose'
 import './style.css'
 
@@ -12,7 +11,6 @@ const requestedWorld = document.documentElement.dataset.world
 const world: World = requestedWorld === 'cabin' || requestedWorld === 'town' ? requestedWorld : 'castle'
 const ui = shell(world)
 const abort = new AbortController()
-const feedback = sceneFeedback(world,ui.feedback,ui.feedbackTrigger,abort.signal)
 
 async function start() {
   const renderer = new THREE.WebGLRenderer({ canvas: ui.canvas, antialias: true, alpha: false, powerPreference: 'high-performance' })
@@ -80,7 +78,6 @@ async function start() {
       if (!immediate) {
         const url = new URL(location.href)
         url.searchParams.delete('pose')
-        url.searchParams.delete('receipt')
         url.hash = view.id
         history.replaceState(history.state,'',url)
       }
@@ -94,17 +91,9 @@ async function start() {
   ui.setViews(views,select)
   const requested = views.findIndex(v => '#'+encodeURIComponent(v.id)===location.hash)
   select(Math.max(0,requested),true,readPose(new URLSearchParams(location.search)))
-  feedback.setCapture(() => ({
-    camera:{position:camera.position.toArray(),target:controls.target.toArray()},
-    screenshot:renderer.getContext().isContextLost() ? null : snapshot(ui.canvas,() => {
-      finish.focus(camera.position.distanceTo(controls.target))
-      finish.draw(scene)
-    })
-  }))
   const resize = new ResizeObserver(fit)
   resize.observe(ui.canvas)
   let last = 0, elapsed = 0, sampleTime = 0, sampleFrames = 0, first = true
-  let readyAt = 0
   function render(milliseconds: number) {
     if (abort.signal.aborted || document.hidden) return
     const dt = last ? Math.min((milliseconds-last)/1000,.1) : 0
@@ -118,10 +107,8 @@ async function start() {
     finish.draw(scene)
     if (first) {
       ui.ready()
-      readyAt = milliseconds
       first = false
     }
-    if (feedback.requested && (details.settled || milliseconds-readyAt > 6000)) feedback.openRequested()
     sampleFrames++
     if (milliseconds-sampleTime >= 1000) {
       if (ui.metrics.open) {
@@ -142,7 +129,7 @@ async function start() {
     renderer.setAnimationLoop(active ? render : null)
   }
   function key(event: KeyboardEvent) {
-    if (event.ctrlKey || event.metaKey || event.altKey || ui.dialog.open || ui.feedback.open) return
+    if (event.ctrlKey || event.metaKey || event.altKey || ui.dialog.open || ui.joinDialog.open) return
     if (event.key.toLowerCase() === 'h') ui.toggleUI()
     if (/^[1-9]$/.test(event.key)) select(Number(event.key)-1)
   }
@@ -169,7 +156,6 @@ async function start() {
     event.preventDefault()
     renderer.setAnimationLoop(null)
     ui.fail('图形设备连接已中断，可重新载入场景。')
-    feedback.openRequested()
   },{signal:abort.signal})
   syncVisibility()
 }
@@ -177,5 +163,4 @@ async function start() {
 start().catch(error => {
   console.error(error)
   ui.fail('场景未能启动。请确认浏览器已启用 WebGL 2 和图形加速。')
-  feedback.openRequested()
 })

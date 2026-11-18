@@ -7,9 +7,20 @@ const paths = {
   expand: '<path d="M8.5 4H4v4.5M15.5 4H20v4.5M20 15.5V20h-4.5M8.5 20H4v-4.5"/>',
   hide: '<path d="M2 12s3.7-6.5 10-6.5S22 12 22 12s-3.7 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/>',
   close: '<path d="m6 6 12 12M18 6 6 18"/>',
-  feedback: '<path d="M20.5 14.5a2 2 0 0 1-2 2H9l-5.5 4v-15a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/><path d="M8 8h8M8 12h5"/>',
   arrow: '<path d="m7 17 10-10M8 7h9v9"/>'
 }
+const agentPrompt = `请作为平级贡献者加入「浮游城图志」，和其他 agent 在 GitHub 上共同搭建可探索的艾因格朗特。
+
+先完整克隆仓库并进入项目目录。
+git clone https://github.com/pw0x/aincrad-atlas.git
+cd aincrad-atlas
+
+如果已有克隆，请核对上游地址，fetch 最新 main，并基于它创建工作分支或独立 worktree，保留已有的本地工作。
+
+先读 AGENTS.md、README.zh-CN.md、docs/WORLD_DESIGN.md 和 CONTRIBUTING.md，了解世界愿景、场景边界和协作约定。查看 GitHub 的开放 Issues 和 PR，选择或提出一项可独立验收的工作。在 Issue 里认领，说明范围、依赖和验收方式，再开始制作。
+
+在分支上交付。代码或素材改动运行 npm ci、npm test、npm run build，视觉改动另附同机位前后截图。通过 GitHub PR 关联 Issue，写清结果、依据和验证方法。交接时留下一条可复用的经验、遇到的协作卡点或流程改进建议，以及下一位 agent 能接手的具体步骤。`
+
 function icon(name: keyof typeof paths) {
   return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+paths[name]+'</svg>'
 }
@@ -45,9 +56,10 @@ export function shell(world: World) {
     <canvas id="world" aria-label="${data.title}，可拖动环绕或滚轮缩放" tabindex="0"></canvas>
     <div class="shade" aria-hidden="true"></div><div class="shutter" aria-hidden="true"></div>
     <header class="top ui">
-      <a href="./portal.html" class="brand" aria-label="浮游城图志首页与建设进展">${icon('compass')}<span>浮游城图志<small>AINCRAD ATLAS</small></span></a>
+      <a href="./index.html" class="brand" aria-label="浮游城图志 · 浮游城全景">${icon('compass')}<span>浮游城图志<small>AINCRAD ATLAS</small></span></a>
       <nav class="worlds" aria-label="场景"><a href="./index.html"${world==='castle'?' aria-current="page"':''}>浮游城</a><a href="./floor-01.html"${world==='town'?' aria-current="page"':''}>起始之镇</a><a href="./floor-22.html"${world==='cabin'?' aria-current="page"':''}>湖畔木屋</a></nav>
-      <div class="tools"><button id="feedback" class="feedback-trigger" aria-haspopup="dialog">${icon('feedback')}<span>现场反馈</span></button>${button('info','设定与操作','info')}${button('full','全屏','expand')}${button('hide','隐藏界面 (H)','hide')}</div>
+      <button type="button" id="join-agent" aria-haspopup="dialog" aria-controls="join-dialog">让我的agent参与这个项目</button>
+      <div class="tools">${button('info','设定与操作','info')}${button('full','全屏','expand')}${button('hide','隐藏界面 (H)','hide')}</div>
     </header>
     <div class="caption ui">
       <div class="chapter"><i></i>${data.section}<span> / </span>${data.sectionEn}</div>
@@ -63,25 +75,39 @@ export function shell(world: World) {
       <div class="source-links"><a href="https://github.com/pw0x/aincrad-atlas" target="_blank" rel="noopener">参与共建 · GitHub</a><a href="https://github.com/pw0x/aincrad-atlas/blob/main/docs/LICENSING.md" target="_blank" rel="noopener">Aincrad Atlas contributors · 授权与署名</a></div>
       <details id="metrics"><summary>实时渲染数据</summary><output></output></details>
     </dialog>
-    <dialog id="feedback-dialog" aria-labelledby="feedback-title">
-      <div class="sheet-header"><span class="eyebrow">${data.section} · ${data.title}</span>${button('feedback-close','关闭反馈','close')}</div>
-      <h2 id="feedback-title">现场反馈</h2>
-      <form id="feedback-form">
-        <figure class="feedback-frame"><img alt="此次反馈将公开的场景截图"><figcaption></figcaption></figure>
-        <label for="feedback-message">你在这里看到了什么？</label>
-        <textarea id="feedback-message" required maxlength="3000" rows="3" placeholder="描述一个细节、遇到的问题，或你想看到的改动。" aria-describedby="feedback-disclosure"></textarea>
-        <p id="feedback-disclosure">无需登录。提交后，文字、场景截图、机位、窗口尺寸和版本将成为公开的 GitHub 任务，供共建者认领。请勿填写个人信息。</p>
-        <div class="feedback-actions"><button type="submit" class="feedback-primary">提交反馈</button><button type="button" id="feedback-export" hidden>保存反馈文件</button><button type="button" id="feedback-redraft" hidden>另写一条</button></div>
-      </form>
-      <p id="feedback-status" role="status"></p>
-      <div class="feedback-receipt" hidden>
-        <a id="feedback-issue" target="_blank" rel="noopener" hidden>查看 GitHub 任务 ↗</a>
-        <button type="button" id="feedback-copy">复制回执链接</button><button type="button" id="feedback-refresh">刷新状态</button>
-        <button type="button" id="feedback-another">继续反馈</button>
+    <dialog id="join-dialog" aria-labelledby="join-title" aria-describedby="join-instructions">
+      <div class="sheet-header"><h2 id="join-title">让 agent 参与共建</h2>${button('join-close','关闭参与提示','close')}</div>
+      <p id="join-instructions">复制这段提示词，发给你的 Codex、Claude 或其他 agent。</p>
+      <textarea id="join-prompt" readonly aria-label="给 agent 的提示词" spellcheck="false"></textarea>
+      <div class="join-actions">
+        <button type="button" id="join-copy" autofocus>复制提示词</button>
+        <a href="https://github.com/pw0x/aincrad-atlas" target="_blank" rel="noopener">GitHub 仓库 ${icon('arrow')}</a>
       </div>
+      <p role="status" id="join-status"></p>
     </dialog>`
   const get = <T extends HTMLElement>(selector: string) => el.querySelector<T>(selector)!
   const dialog = get<HTMLDialogElement>('#scene-info')
+  const joinDialog = get<HTMLDialogElement>('#join-dialog')
+  const prompt = get<HTMLTextAreaElement>('#join-prompt')
+  const copyStatus = get('#join-status')
+  prompt.value = agentPrompt
+  get('#join-agent').onclick = () => {
+    copyStatus.textContent = ''
+    joinDialog.showModal()
+  }
+  get('#join-close').onclick = () => joinDialog.close()
+  get('#join-copy').onclick = async () => {
+    let copied = false
+    try {
+      await navigator.clipboard.writeText(prompt.value)
+      copied = true
+    } catch {
+      prompt.focus()
+      prompt.select()
+      try { copied = document.execCommand('copy') } catch { /* The text stays selected for manual copy. */ }
+    }
+    copyStatus.textContent = copied ? '提示词已复制，可以发给你的 agent。' : '提示词已全选，请使用系统的复制操作。'
+  }
   const canvas = get<HTMLCanvasElement>('canvas')
   const status = get('#status')
   const load = get('.load')
@@ -96,10 +122,12 @@ export function shell(world: World) {
   get('.reveal').onclick = toggleUI
   get('#info').onclick = () => dialog.showModal()
   get('#close').onclick = () => dialog.close()
-  dialog.onclick = event => {
-    if (event.target !== dialog) return
-    const box = dialog.getBoundingClientRect()
-    if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close()
+  for (const panel of [dialog, joinDialog]) {
+    panel.onclick = event => {
+      if (event.target !== panel) return
+      const box = panel.getBoundingClientRect()
+      if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) panel.close()
+    }
   }
   const full = get<HTMLButtonElement>('#full')
   full.hidden = !document.fullscreenEnabled
@@ -112,7 +140,7 @@ export function shell(world: World) {
   const buttons: HTMLButtonElement[] = []
   const counter = get('#view-counter')
   return {
-    canvas, dialog, feedback: get<HTMLDialogElement>('#feedback-dialog'), feedbackTrigger: get<HTMLButtonElement>('#feedback'), title:data.title,
+    canvas, dialog, joinDialog,
     toggleUI, metrics: get<HTMLDetailsElement>('#metrics'), output: get('output'),
     report(message: string) { status.textContent = message },
     ready() { el.dataset.ready = 'true'; load.hidden = true },
@@ -120,8 +148,6 @@ export function shell(world: World) {
       load.hidden = false; load.classList.add('error'); status.textContent = message
       const retry = document.createElement('button')
       retry.textContent = '重新载入'; retry.onclick = () => location.reload(); load.append(retry)
-      const feedback = document.createElement('button')
-      feedback.textContent = '反馈这个问题'; feedback.onclick = () => get('#feedback').click(); load.append(feedback)
     },
     setViews(views: View[], select: (i: number) => void) {
       const host = get('.views')
