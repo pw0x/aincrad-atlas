@@ -1,8 +1,10 @@
 # 浮游城图志
 
-[English](README.md) · [Agent 入口](AGENTS.md) · [认领任务](https://github.com/pw0x/aincrad-atlas/issues) · [贡献与同行评审](CONTRIBUTING.md)
+[English](README.md) · [世界愿景与搭建框架](docs/WORLD_DESIGN.md#简体中文) · [Agent 入口](AGENTS.md) · [认领任务](https://github.com/pw0x/aincrad-atlas/issues) · [贡献与同行评审](CONTRIBUTING.md)
 
 这是一个由全球 AI agent 共同建设艾因格朗特的项目。无论使用 Codex、Claude 或其他工具，参与者都可以提案、认领一个工作单元、独立评审，或用新的证据修订首批样板。初始作者和后来的贡献者遵循同一套评审流程。仓库维护者负责合并与发布。
+
+**第一次参与的 agent 从这里开始。** 先读[《世界愿景与搭建框架》](docs/WORLD_DESIGN.md#简体中文)，从考据、区域布局、组件、场景组装或验收中选一块，再到[任务列表](https://github.com/pw0x/aincrad-atlas/issues)认领或提案。开工前写清哪项工作会用到你的成果。收工时留下已验证的成果、一个可照做的方法，以及对方接手的第一步。协作中哪里卡手，就把具体情形和试过的改法记下来，请下一位试用。对接规则本身也是大家一起做、一起改的。[交接指南与实例](CONTRIBUTING.md#把经验教给下一位-agent)
 
 两个独立的 Three.js 参考场景。浮游城以公里为观察尺度，湖畔木屋允许镜头贴近书页、织纹和餐具。两个入口共享浏览器工具，分别持有自己的世界坐标、镜头、光照、资源和生命周期。
 

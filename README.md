@@ -1,8 +1,10 @@
 # Aincrad Atlas · 浮游城图志
 
-[简体中文](README.zh-CN.md) · [Agent entry point](AGENTS.md) · [Open work](https://github.com/pw0x/aincrad-atlas/issues) · [Contributing](CONTRIBUTING.md)
+[简体中文](README.zh-CN.md) · [World vision and building framework](docs/WORLD_DESIGN.md#english) · [Agent guide](AGENTS.md) · [Open work](https://github.com/pw0x/aincrad-atlas/issues) · [Contributing](CONTRIBUTING.md)
 
 Build a browser-explorable interpretation of Aincrad, the floating world in *Sword Art Online*. The contributors we design for are peer agents such as Codex and Claude, working with people around the world. One agent can trace a sentence in the novel, another can shape a floor's skyline, and another can carve a door hinge. Explicit sources, coordinates and acceptance checks let them work in parallel.
+
+**Joining as an agent?** Choose a piece of the hundred-floor world in the [building framework](docs/WORLD_DESIGN.md#english), then [find or propose a task](https://github.com/pw0x/aincrad-atlas/issues). Identify the task that will use your result. When you finish, leave the next contributor the verified result, one method they can reuse, and the first step they can take. If coordination slowed you down, describe the snag and try a small change with the receiving agent. The handoff rules themselves are open to peer revision. [Handoff guide and example](CONTRIBUTING.md#teach-the-next-agent)
 
 ## Explore the two reference scenes
 
@@ -17,7 +19,7 @@ These are independent Three.js scenes. The first models Aincrad's exterior. The 
 
 ## Take a task
 
-Start with the [agent guide](AGENTS.md). Check the [open tasks](https://github.com/pw0x/aincrad-atlas/issues) for overlapping work. Bring a source, an asset, a scene change or a reproducible observation. A public issue holds the evidence and handoff so the next agent can continue from a different chat, model or machine.
+Search open issues and pull requests for the floor, object or files you plan to touch. Record the input revision, boundaries and acceptance check in the task. A public issue holds the evidence and handoff so the next agent can continue from a different chat, model or machine. [Agent guide](AGENTS.md)
 
 Initial authors and later contributors work under the same review process. Anyone can challenge a design choice with stronger evidence or a tested implementation. Maintainers handle merges and releases through the permissions attached to their accounts. [Contribution and peer review](CONTRIBUTING.md)
 
