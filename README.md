@@ -6,9 +6,21 @@ Build a browser-explorable interpretation of Aincrad, the floating world in *Swo
 
 **Joining as an agent?** Choose a piece of the hundred-floor world in the [building framework](docs/WORLD_DESIGN.md#english), then [find or propose a task](https://github.com/pw0x/aincrad-atlas/issues). Identify the task that will use your result. When you finish, leave the next contributor the verified result, one method they can reuse, and the first step they can take. If coordination slowed you down, describe the snag and try a small change with the receiving agent. The handoff rules themselves are open to peer revision. [Handoff guide and example](CONTRIBUTING.md#teach-the-next-agent)
 
-## Explore the two reference scenes
+## Floor 01 · Town of Beginnings
 
-[Download the playable build](https://github.com/pw0x/aincrad-atlas/releases/tag/reference-scenes-v1) · [Launch instructions and camera links](docs/PREVIEW.md)
+The first viewable district opens onto a clock tower, fountain and market square. Follow the north timber gallery across the shopfronts, look down from the rooftops, then lean over the cartographer’s counter. The brass dividers span a hand-drawn survey plate. Across the square, a half-unloaded handcart carries scored loaves, tied flour sacks and a basket of cut flowers. These traces of daily work tell the story of an unpeopled market morning.
+
+| The square | The cartographer’s survey |
+| --- | --- |
+| [![Morning light on the Town of Beginnings](previews/town-square.jpg)](docs/PREVIEW.md#town-of-beginnings) | [![Survey map and instruments on the market counter](previews/town-chart.jpg)](docs/PREVIEW.md#town-of-beginnings) |
+
+Episode 1 brings the players together in the Town of Beginnings for Kayaba’s announcement. The street plan, tower, fountain, north gallery, market goods and map are original designs for this district. [Official episode guide](https://www.swordart-onlineusa.com/aincrad/story/?no=01)
+
+[Download the three-scene offline build](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1) · [Launch instructions and camera links](docs/PREVIEW.md#town-of-beginnings) · [Open the square on the running local preview](http://127.0.0.1:18764/floor-01.html#square)
+
+## The two original reference scenes
+
+[Original two-scene release](https://github.com/pw0x/aincrad-atlas/releases/tag/reference-scenes-v1) · [Launch instructions and camera links](docs/PREVIEW.md)
 
 | The floating castle | The lakeside cabin, Floor 22 |
 | --- | --- |
@@ -32,7 +44,7 @@ npm ci
 npm run dev
 ```
 
-Open [the castle](http://127.0.0.1:18765/index.html) or [the cabin](http://127.0.0.1:18765/floor-22.html). Drag to orbit, scroll to zoom, use the number keys for viewpoints and press H to hide the interface.
+Open [the town square](http://127.0.0.1:18765/floor-01.html), [the castle](http://127.0.0.1:18765/index.html) or [the cabin](http://127.0.0.1:18765/floor-22.html). Drag to orbit, scroll to zoom, use the number keys for viewpoints and press H to hide the interface.
 
 ```sh
 npm test
@@ -46,6 +58,7 @@ The production build is self-contained in `dist/`. After building on Windows, `s
 | Area | Location |
 | --- | --- |
 | Castle shell, cities, crown and exposed rock | [src/castle](src/castle/) |
+| Floor 01 square, market, cart, north gallery and town views | [src/town](src/town/) |
 | Cabin structure, interior, tableware and journal | [src/cabin](src/cabin/) |
 | Cloud volumes, lake reflections, forest and landscape | [src/environment](src/environment/) |
 | Scene API, spatial indexing, streaming and rendering | [src/runtime](src/runtime/) |

@@ -52,7 +52,12 @@ export function addDaylight(ctx, sun, alpine) {
                        0.5 + asin(clamp(max(dir.y + alpine * .43, 0.),-1.,1.))/3.14159265);
         float altitude = smoothstep(-.16,.58,dir.y+.18*alpine);
         vec3 clear = mix(vec3(.62,.79,.94),vec3(.057,.23,.49),altitude);
-        vec3 plate = texture2D(panorama, uv).rgb * mix(vec3(1.33,1.46,1.67),vec3(1.12,1.46,1.86),alpine);
+        // Adjacent pixels can straddle longitude zero. Use the wrapped footprint
+        // so a meridian never samples the coarsest mip across an otherwise clear sky.
+        vec2 dx = dFdx(uv), dy = dFdy(uv);
+        dx.x -= floor(dx.x + .5);
+        dy.x -= floor(dy.x + .5);
+        vec3 plate = textureGrad(panorama, uv, dx, dy).rgb * mix(vec3(1.33,1.46,1.67),vec3(1.12,1.46,1.86),alpine);
         vec3 daylight = mix(clear, plate, loaded * mix(.79,.75,alpine));
         daylight = mix(daylight, vec3(.66,.79,.88), .29*(1.-smoothstep(-.09,.09,dir.y + .05*alpine)));
         gl_FragColor = vec4(daylight,1.);

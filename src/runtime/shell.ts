@@ -1,6 +1,6 @@
 import type { View } from './api'
 
-export type World = 'cabin' | 'castle'
+export type World = 'cabin' | 'castle' | 'town'
 const paths = {
   compass: '<path d="m12 2 4 7 5 3-5 3-4 7-4-7-5-3 5-3z"/><path d="m12 6 1 5 4 1-4 1-1 5-1-5-4-1 4-1z"/>',
   info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 10.5v6m0-10v.8"/>',
@@ -23,6 +23,12 @@ const lore = {
     interpretation: '本场景按米构建基底和百层外缘。具体檐口、城翼构造、明暗节奏、植被与岩体断面属于此次外观设计，一百层的室内世界留给各楼层独立制作。',
     sources: [['第一卷 · 授权试读，第 10 页','https://cdn.palmknihy.cz/prod-media-assets/01HHYC58KAA77HTEVBDKT1MQ6P/book_362079_51.pdf#page=10'],['Yen Press · 艾因格朗特','https://yenpress.com/titles/9780316371247-sword-art-online-1-aincrad-light-novel']]
   },
+  town: {
+    title: '起始之镇', en: 'TOWN OF BEGINNINGS', section: '第一层', sectionEn: 'FLOOR ONE',
+    canon: '动画第一季第一话「剣の世界」中，桐人与克莱因被传送回起始之镇的广场，听到茅场晶彦对玩家的宣告。本场景取这个地点，描绘另一个平静的集市时刻。',
+    interpretation: '这里搭建了广场的一段街区。钟楼、市集平面、星盘泉池、上层底板的截面和运货花车均为原创补完。摊上的地图是以第一层为题的幻想测绘图。',
+    sources: [['动画官网 · 第一话「剣の世界」','https://www.swordart-onlineusa.com/aincrad/story/?no=01']]
+  },
   cabin: {
     title: '湖畔木屋', en: 'LAKESIDE CABIN', section: '第二十二层', sectionEn: 'FLOOR TWENTY-TWO',
     canon: '动画第十一话把桐人与亚丝娜的家安在第二十二层湖边。川原砾在《The Day Before》中写到屋后的针叶林、白木板装修的起居室，以及摆在室内的圆桌。',
@@ -39,7 +45,7 @@ export function shell(world: World) {
     <div class="shade" aria-hidden="true"></div><div class="shutter" aria-hidden="true"></div>
     <header class="top ui">
       <a href="./index.html" class="brand" aria-label="浮游城图志首页">${icon('compass')}<span>浮游城图志<small>AINCRAD ATLAS</small></span></a>
-      <nav class="worlds" aria-label="场景"><a href="./index.html"${world==='castle'?' aria-current="page"':''}>浮游城</a><a href="./floor-22.html"${world==='cabin'?' aria-current="page"':''}>湖畔木屋</a></nav>
+      <nav class="worlds" aria-label="场景"><a href="./index.html"${world==='castle'?' aria-current="page"':''}>浮游城</a><a href="./floor-01.html"${world==='town'?' aria-current="page"':''}>起始之镇</a><a href="./floor-22.html"${world==='cabin'?' aria-current="page"':''}>湖畔木屋</a></nav>
       <div class="tools">${button('info','设定与操作','info')}${button('full','全屏','expand')}${button('hide','隐藏界面 (H)','hide')}</div>
     </header>
     <div class="caption ui">

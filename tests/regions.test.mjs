@@ -3,7 +3,10 @@ import assert from 'node:assert/strict'
 import { Group, Vector3 } from 'three'
 import { createServer } from 'vite'
 
-const loader = await createServer({server:{middlewareMode:true},appType:'custom'})
+const loader = await createServer({
+  server:{middlewareMode:true}, appType:'custom',
+  optimizeDeps:{noDiscovery:true,include:[]}
+})
 const {DetailRegions} = await loader.ssrLoadModule('/src/runtime/resources.ts')
 after(() => loader.close())
 const tick = () => new Promise(resolve => setImmediate(resolve))
