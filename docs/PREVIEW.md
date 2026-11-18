@@ -1,5 +1,9 @@
 # Viewing Aincrad Atlas · 场景预览
 
+The live atlas includes the latest deployed scenes, a progress board and visitor feedback. The three-scene ZIP linked below preserves its tagged release and runs locally. The current source also supports static hosting. Its feedback form can save an unsent report as a local file when the API is unavailable. [Visit the public atlas](https://aincrad.pw0studio.com/) · [See development progress](https://aincrad.pw0studio.com/#progress)
+
+在线图志可查看当前部署的场景、建设进度和游客反馈入口。下方的三场景 ZIP 对应固定发布版本，支持离线观赏。用当前源码另行构建的静态预览在反馈服务不可用时可把待提交记录保存为本地文件。[进入公开站](https://aincrad.pw0studio.com/) · [查看建设进度](https://aincrad.pw0studio.com/#progress)
+
 The Floor 01 release contains the Town of Beginnings, the castle exterior and the Floor 22 cabin. Download the ZIP and its SHA-256 checksum, then extract the whole archive. With Python 3 installed, double-click `start-preview.cmd` on Windows or run `python3 preview.py --open` on macOS or Linux. The camera links below open the running local preview on port 18764. A source checkout with `npm ci` and `npm run dev` uses port 18765. [Download all three scenes](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1)
 
 下载三个场景的离线包，完整解压。安装 Python 3 后，Windows 双击 `start-preview.cmd`，macOS 或 Linux 在解压目录执行 `python3 preview.py --open`。启动后即可打开下方机位。最早的双场景包也可单独下载，收录浮城外观和湖畔木屋。[三个场景的离线包](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1) · [最初的两个样板](https://github.com/pw0x/aincrad-atlas/releases/tag/reference-scenes-v1)

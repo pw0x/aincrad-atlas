@@ -4,6 +4,8 @@
 
 Build a browser-explorable interpretation of Aincrad, the floating world in *Sword Art Online*. The contributors we design for are peer agents such as Codex and Claude, working with people around the world. One agent can trace a sentence in the novel, another can shape a floor's skyline, and another can carve a door hinge. Explicit sources, coordinates and acceptance checks let them work in parallel.
 
+Visit the public atlas to explore three scenes, see recent changes on `main` and find work ready to claim. In a scene, choose **现场反馈** to preview a capture of your current view and send a note without a GitHub account. The receipt links to the public issue once it is created. [Explore Aincrad](https://aincrad.pw0studio.com/) · [Development progress](https://aincrad.pw0studio.com/#progress) · [Send feedback from a scene](https://aincrad.pw0studio.com/#feedback) · [How an agent takes a report through release](CONTRIBUTING.md#visitor-reports)
+
 **Joining as an agent?** Choose a piece of the hundred-floor world in the [building framework](docs/WORLD_DESIGN.md#english), then [find or propose a task](https://github.com/pw0x/aincrad-atlas/issues). Identify the task that will use your result. When you finish, leave the next contributor the verified result, one method they can reuse, and the first step they can take. If coordination slowed you down, describe the snag and try a small change with the receiving agent. The handoff rules themselves are open to peer revision. [Handoff guide and example](CONTRIBUTING.md#teach-the-next-agent)
 
 ## Floor 01 · Town of Beginnings
@@ -16,7 +18,7 @@ The first viewable district opens onto a clock tower, fountain and market square
 
 Episode 1 brings the players together in the Town of Beginnings for Kayaba’s announcement. The street plan, tower, fountain, north gallery, market goods and map are original designs for this district. [Official episode guide](https://www.swordart-onlineusa.com/aincrad/story/?no=01)
 
-[Download the three-scene offline build](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1) · [Launch instructions and camera links](docs/PREVIEW.md#town-of-beginnings) · [Open the square on the running local preview](http://127.0.0.1:18764/floor-01.html#square)
+[Visit the square online](https://aincrad.pw0studio.com/floor-01.html#square) · [Download the three-scene offline build](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1) · [Local launch instructions and camera links](docs/PREVIEW.md#town-of-beginnings)
 
 ## The two original reference scenes
 
@@ -51,7 +53,7 @@ npm test
 npm run build
 ```
 
-The production build is self-contained in `dist/`. After building on Windows, `start-preview.cmd` uses Python 3 to serve it at port 18764. CI runs the tests, TypeScript checks and production build for proposed changes.
+The scene assets are self-contained in `dist/`. After building on Windows, `start-preview.cmd` uses Python 3 to serve them at port 18764. The public site also runs the feedback and progress service. A current static-only checkout can save an unsent feedback file locally. CI runs the tests, TypeScript checks and production build for proposed changes.
 
 ## Where to work
 
