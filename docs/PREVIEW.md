@@ -15,7 +15,3 @@ Use the [reference release](https://github.com/pw0x/aincrad-atlas/releases/tag/r
 [Dining room](http://127.0.0.1:18764/floor-22.html) · [Across the lake](http://127.0.0.1:18764/floor-22.html#lakeshore) · [Door fittings](http://127.0.0.1:18764/floor-22.html#carving) · [Field journal](http://127.0.0.1:18764/floor-22.html#field-notes)
 
 ![Dining room of the Floor 22 cabin](../previews/cabin.jpg)
-
-## Hosted preview
-
-The Pages deployment currently inherits an unavailable domain from the repository owner's account. The downloadable build above works independently of that domain. [Deployment history](https://github.com/pw0x/aincrad-atlas/actions/workflows/pages.yml)
