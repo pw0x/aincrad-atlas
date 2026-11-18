@@ -6,10 +6,12 @@ Build a browser-explorable interpretation of Aincrad, the floating world in *Swo
 
 ## Explore the two reference scenes
 
+[Download the playable build](https://github.com/pw0x/aincrad-atlas/releases/tag/reference-scenes-v1) · [Launch instructions and camera links](docs/PREVIEW.md)
+
 | The floating castle | The lakeside cabin, Floor 22 |
 | --- | --- |
-| [![Floating castle above the clouds](previews/castle.jpg)](https://pw0x.github.io/aincrad-atlas/index.html) | [![Timber-lined dining room](previews/cabin.jpg)](https://pw0x.github.io/aincrad-atlas/floor-22.html) |
-| Orbit a ten-kilometre base and the exterior of one hundred floors. Fly to the [outer district](https://pw0x.github.io/aincrad-atlas/index.html#gallery) or the [Ruby Palace](https://pw0x.github.io/aincrad-atlas/index.html#palace). | Look [across the water](https://pw0x.github.io/aincrad-atlas/floor-22.html#lakeshore), inspect the [door fittings](https://pw0x.github.io/aincrad-atlas/floor-22.html#carving) or read the [lakeshore journal](https://pw0x.github.io/aincrad-atlas/floor-22.html#field-notes). |
+| [![Floating castle above the clouds](previews/castle.jpg)](docs/PREVIEW.md#floating-castle) | [![Timber-lined dining room](previews/cabin.jpg)](docs/PREVIEW.md#lakeside-cabin) |
+| Orbit a ten-kilometre base and the exterior of one hundred floors. See the [outer district](previews/gallery.jpg) or the [Ruby Palace](previews/palace.jpg). | See [the lakeshore](previews/lakeshore.jpg), inspect the [door fittings](previews/carving.jpg) or read the [lakeshore journal](previews/journal.jpg). |
 
 These are independent Three.js scenes. The first models Aincrad's exterior. The second explores the scale of one home. The hundred floor interiors remain an open world-building project. Each scene records canon and artistic interpretation in its information panel.
 

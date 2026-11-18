@@ -8,10 +8,10 @@
 
 ## 打开
 
-通过下面的链接可直接浏览在线版本。克隆仓库后，也可以先执行 `npm ci` 和 `npm run build`，再在 Windows 上双击 `start-preview.cmd` 用 Python 3 预览。通过页面顶部切换场景，右下方选择观察点。按住鼠标左键环绕，滚轮缩放，右键平移。数字键选择视点，H 隐藏界面。右上角的设定面板含原作依据和实时绘制数据。
+下载[可运行的参考场景包](https://github.com/pw0x/aincrad-atlas/releases/tag/reference-scenes-v1)，按[预览说明](docs/PREVIEW.md)打开。下面附有两处场景及关键机位的实景画面。克隆仓库后，也可以先执行 `npm ci` 和 `npm run build`，再在 Windows 上双击 `start-preview.cmd` 用 Python 3 预览。通过页面顶部切换场景，右下方选择观察点。按住鼠标左键环绕，滚轮缩放，右键平移。数字键选择视点，H 隐藏界面。右上角的设定面板含原作依据和实时绘制数据。
 
-- [浮游城全景](https://pw0x.github.io/aincrad-atlas/index.html) · [外环廊城镇](https://pw0x.github.io/aincrad-atlas/index.html#gallery)
-- [湖窗餐室](https://pw0x.github.io/aincrad-atlas/floor-22.html) · [隔湖回望](https://pw0x.github.io/aincrad-atlas/floor-22.html#lakeshore) · [桌边的湖岸手记](https://pw0x.github.io/aincrad-atlas/floor-22.html#field-notes)
+- [浮游城全景](docs/PREVIEW.md#floating-castle) · [外环廊城镇](previews/gallery.jpg)
+- [湖窗餐室](docs/PREVIEW.md#lakeside-cabin) · [隔湖回望](previews/lakeshore.jpg) · [桌边的湖岸手记](previews/journal.jpg)
 
 ## 原作和美术选择
 
