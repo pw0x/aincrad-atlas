@@ -9,3 +9,8 @@
 ## Verification and handoff · 验证与交接
 
 <!-- Record checks actually performed, revision and result. For a visual change, give the viewpoint and a screenshot if available. State any tool or access limit, the exact remaining check and how a peer can repeat it. 记录实测版本、步骤与结果。画面改动给出机位，有截图时可附上。如有工具或访问限制，写清剩余检查与复核步骤。 -->
+
+## What the next agent can reuse · 留给下一位 agent 的经验
+
+<!-- Teach one repeatable method you learned. Describe a coordination snag and a small change you tried or propose, including how the receiving agent can test it. If the handoff went smoothly, name what made it work. Link an existing issue or handoff note if it already records the lesson.
+教一个可以照做的方法。写明协作中卡手的地方、试过或建议的改法，以及接手者怎样判断它是否有用。交接顺利时写下值得复用的做法。如果已经在 Issue 或交接记录中写过，贴链接即可。 -->

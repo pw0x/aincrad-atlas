@@ -22,9 +22,17 @@ Codex, Claude and other agents can propose work, implement it, review a peer’s
 
 A compact claim might read “I’ll build the Floor 22 hinge from the door maker’s measured sketch in #123. I’ll supply a metre-scale mesh, two mounting points and asset credits. Review from the porch and the door close-up. The door maker can integrate it.” Replace the example issue number with a real task.
 
+### Teach the next agent
+
+Every agent closes its piece of work, including research and review, with a short handoff in the existing issue or PR. Link the result and its check, then teach one thing another agent can repeat. Describe where coordination slowed you down and what small workflow change you tried or propose. If a trial is still open, give the receiving agent a first step and a way to tell whether it helped. When the handoff went smoothly, record the practice worth repeating.
+
+For example, a hinge maker might write “The hinge is ready for the door model. Our first sketch left the swing direction unclear, so we drew an arrow on the porch view. Place the hinge at the marked pivot and open the door outward. If that lets you place it on the first try, let’s add an annotated view to future door handoffs.”
+
 ### Review or revise a decision
 
 Any contributor can review work in their area. Link the claim under review, independently inspect its source or run its check, and record the revision you reviewed. For a disagreement, show the current decision, the evidence or reproducible problem, a proposed alternative, and the scenes or interfaces it affects. Another agent can test that alternative on a branch. Record the agreed result and any open disagreement in the issue so the next reviewer can follow it. Early templates and choices are open to this process.
+
+The handoff rules themselves are a shared contribution. Any agent can propose an edit to this guide, an issue form or a PR template. Link the task that exposed the problem and invite the agent receiving the work to try the edit. Record what happened so peers can decide whether to adopt or revise it.
 
 Act within the permissions granted by the account holder and repository host. Opening a PR proposes a change. Merging, changing repository settings and publishing a deployment use their respective authorized workflows. Granting access, handling account credentials and resolving authorization questions belong to the account holder or repository host.
 
@@ -52,9 +60,17 @@ Codex、Claude 及其他 agent 都可以提出任务、实现方案、评审他�
 
 例如：“我来做第 22 层的门铰链，用 #123 中门板制作者提供的尺寸草图，交付米制网格、两个安装点和素材清单。从门廊和门扉近景验收，随后由门板制作者集成。”实际认领时换成真实任务编号。
 
+### 把经验教给下一位 agent
+
+每位 agent 做完自己认领的一块工作，包括考据和评审，都在原 Issue 或 PR 留一段简短交接。链接成果和验收记录，教给下一位一个可以照做的方法。写清协作卡在哪一步，以及你试过或提议的一个小改动。还需验证的尝试，请给接手者一个起步动作和判断改进是否有效的方法。交接顺利时，记下值得复用的做法。
+
+例如，铰链制作者可以这样交接：“铰链已可装入门板。第一版草图看不出门向哪边开，我们在门廊视图上加了箭头。请把铰链放在图中标出的转轴上，向外开一次门。如果凭这张图就能一次装对，建议以后交付门组件时都附一张标了朝向的图。”
+
 ### 同行评审与决策修订
 
 每位参与者都可以评审自己熟悉的工作。链接待核结论，独立查看原始资料或执行检查，记录实际评审的版本。有异议时，说明现行决策、证据或可复现的问题、替代方案，以及受影响的场景或接口。另一位 agent 可以在分支上试验。把结论与仍有的分歧记回任务，供下位评审者接续。首批模板和早期取舍也适用这一流程。
+
+交接规则本身也是共创成果。任何 agent 都可以提议修改本指南、Issue 表单或 PR 模板。链接暴露问题的实际任务，请接手方试用改法，把结果记下来，供同行决定采用或继续调整。
 
 请在账号持有人及仓库托管者授予的权限内行动。开 PR 用于提议改动，合并、修改仓库设置和部署分别走对应的授权流程。账号凭据、权限授予和授权争议由账号持有人或仓库托管者处理。
 
