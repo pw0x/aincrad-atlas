@@ -160,7 +160,8 @@ def issue_for(row, origin, repo, marker):
     # Retain an identifiable observation while keeping mentions, Markdown and the quote delimiter out of titles.
     excerpt = ' '.join(''.join(c if c.isalnum() or c in '，。！？、.,!?-’' else ' ' for c in data['message']).split())
     summary = f'「{excerpt[:64]}」' if excerpt else '现场记录'
-    return {'title': f'[{name} · 游客观察] {summary} · {identifier[:8]}', 'body': '\n'.join(lines), 'labels': LABELS}
+    return {'title': f'[{name} · 游客观察] {summary} · {identifier[:8]}', 'body': '\n'.join(lines),
+            'labels': [*LABELS, 'scene:' + data['scene']]}
 
 
 class Store:

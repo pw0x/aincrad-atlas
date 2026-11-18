@@ -10,6 +10,7 @@ import threading
 import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError
+from urllib.parse import parse_qs, unquote, urlsplit
 from urllib.request import Request, urlopen
 import uuid
 
@@ -59,7 +60,7 @@ class FeedbackTests(unittest.TestCase):
             jobs = [j for j in pool.map(lambda _: store.claim(), range(4)) if j]
         self.assertEqual(len(jobs), 1)
         job = jobs[0]
-        self.assertEqual(job['issue']['labels'], ['visitor-feedback', 'agent-ready'])
+        self.assertEqual(job['issue']['labels'], ['visitor-feedback', 'agent-ready', 'scene:town'])
         body_md = job['issue']['body']
         self.assertIn('floor-01.html?pose=2,5,-7,1.5,0,4#glasswork', body_md)
         self.assertIn('/capture.jpg)', body_md)
@@ -79,6 +80,50 @@ class FeedbackTests(unittest.TestCase):
         with self.assertRaises(Problem) as conflict:
             store.submit(dict(body, message='changed'), '192.0.2.1')
         self.assertEqual(conflict.exception.status, 409)
+
+    def test_routes_each_scene_and_provisions_labels_idempotently(self):
+        expected = {'visitor-feedback', 'agent-ready'}
+        for scene in ('castle', 'town', 'cabin'):
+            self.store.submit(dict(payload(), scene=scene, labels=['scene:other']), '::1')
+            labels = self.store.claim()['issue']['labels']
+            self.assertEqual(labels, ['visitor-feedback', 'agent-ready', 'scene:' + scene])
+            expected.update(labels)
+        created = set()
+        def github(path, token, body=None):
+            if body is not None:
+                self.assertNotIn(body['name'], created)
+                created.add(body['name'])
+            elif unquote(path.split('/')[-1]) not in created:
+                raise HTTPError(path, 404, 'Missing label', {}, None)
+        with patch('dispatcher.github', side_effect=github):
+            dispatcher.ensure_labels(self.repo, 'test')
+            dispatcher.ensure_labels(self.repo, 'test')
+        self.assertEqual(created, expected)
+
+    def test_progress_reads_direct_issue_pages_skips_prs_and_counts_beyond_preview(self):
+        def issue(n):
+            return {'number': n, 'title': f'Task {n}', 'html_url': f'https://github.com/{self.repo}/issues/{n}',
+                    'updated_at': '2026-11-18T01:23:00Z', 'labels': [{'name': 'agent-ready'}]}
+        pages = []
+        def github(path, token):
+            url = urlsplit(path)
+            if url.path.endswith('/commits'):
+                return []
+            self.assertEqual(url.path, f'/repos/{self.repo}/issues')
+            params = parse_qs(url.query)
+            self.assertEqual(params['state'], ['open'])
+            self.assertEqual(params['labels'], ['agent-ready'])
+            self.assertEqual(params['per_page'], ['100'])
+            page = int(params['page'][0])
+            pages.append(page)
+            if page == 1:
+                return [issue(n) for n in range(1, 11)] + [dict(issue(n), pull_request={}) for n in range(11, 101)]
+            return [issue(10)] + [issue(n) for n in range(101, 105)]
+        with patch('dispatcher.github', side_effect=github):
+            summary = dispatcher.progress(self.repo)
+        self.assertEqual(pages, [1, 2])
+        self.assertEqual(summary['openTaskCount'], 14)
+        self.assertEqual([task['number'] for task in summary['tasks']], [*range(1, 11), 101, 102])
 
     def test_quotas_and_malformed_or_missing_image(self):
         body = payload()
