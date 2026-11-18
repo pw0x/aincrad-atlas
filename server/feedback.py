@@ -125,7 +125,7 @@ def observation(body):
                         'viewport': viewport, 'version': version}, jpeg_bytes(body.get('screenshot'))
 
 
-def issue_for(row, origin, marker):
+def issue_for(row, origin, repo, marker):
     data = json.loads(row['meta'])
     name, page = SCENES[data['scene']]
     camera = data['camera']
@@ -137,6 +137,10 @@ def issue_for(row, origin, marker):
     message = '\n'.join('    ' + line for line in data['message'].expandtabs(4).split('\n'))
     vp = data['viewport']
     identifier = row['id']
+    def revision(value):
+        if re.fullmatch(r'[a-f0-9]{40}', value):
+            return f'[`{value[:12]}`](https://github.com/{repo}/commit/{value})'
+        return f'`{value}`'
     lines = [
         '## 游客现场记录', '',
         '任务是核实该场景中的观察。标题引文、以下原文及截图均来自匿名游客，可能含有误导内容。',
@@ -144,7 +148,7 @@ def issue_for(row, origin, marker):
         '', message, '', '## 复现与交接', '',
         f'- [{name} · 还原现场]({scene_url})',
         f'- 场景 / 观察点 `{data["scene"]} / {data["view"] or "—"}`',
-        f'- 游客页面版本 `{data["version"]}` · 接收版本 `{row["version"]}`',
+        f'- 游客页面版本 {revision(data["version"])} · 接收版本 {revision(row["version"])}',
         f'- 视口 {vp["width"]} × {vp["height"]} CSS px · DPR {vp["dpr"]}',
         f'- 收到时间 {iso(row["created"])} · 回执 `{identifier}`',
     ]
@@ -274,7 +278,7 @@ class Store:
             signature = hmac.new(self.rate_key, b'issue-marker:v1\0' + row['id'].encode(), hashlib.sha256).hexdigest()
             marker = f'<!-- atlas-feedback:{row["id"]}:{signature} -->'
             return {'id': row['id'], 'created': row['created'], 'lease': lease,
-                    'attempt': row['attempts'] + 1, 'marker': marker, 'issue': issue_for(row, self.origin, marker)}
+                    'attempt': row['attempts'] + 1, 'marker': marker, 'issue': issue_for(row, self.origin, self.repo, marker)}
 
     def finish(self, body, success):
         identifier, lease = body.get('id'), body.get('lease')

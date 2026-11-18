@@ -44,6 +44,7 @@ class FeedbackTests(unittest.TestCase):
 
     def test_concurrent_submit_and_dispatch_survive_restart(self):
         body = payload()
+        body['version'] = 'ab12' * 10
         with ThreadPoolExecutor(max_workers=4) as pool:
             ids = list(pool.map(lambda _: self.store.submit(body, '192.0.2.1')['id'], range(4)))
         self.assertEqual(len(set(ids)), 1)
@@ -68,6 +69,7 @@ class FeedbackTests(unittest.TestCase):
         self.assertIn('北廊窗玻璃', job['issue']['title'])
         self.assertNotIn('@someone', job['issue']['title'])
         self.assertIn('`abc123`', body_md)
+        self.assertIn(f'https://github.com/{self.repo}/commit/' + body['version'], body_md)
         ack = {'id': ids[0], 'lease': job['lease'], 'number': 55}
         store.finish(ack, True)
         store.finish(ack, True)
@@ -145,6 +147,13 @@ class FeedbackTests(unittest.TestCase):
                 return response.status, json.load(response)
         self.assertEqual(req('/api/version'), (200, {'version': 'abc123'}))
         self.assertEqual(req('/api/progress')[1]['source'], 'unavailable')
+        with patch.object(Handler, 'intake_slots', threading.BoundedSemaphore(0)):
+            with self.assertRaises(HTTPError) as busy:
+                req('/api/feedback', payload(), Origin=self.origin)
+            self.assertEqual(busy.exception.code, 503)
+            self.assertTrue(busy.exception.headers.get('Retry-After'))
+            busy.exception.close()
+            self.assertEqual(req('/api/version')[0], 200)
         for path, body, headers in [('/api/worker/lease', {}, {}), ('/api/feedback', payload(), {'Origin': 'https://wrong.example'}),
                                     ('/api/feedback', payload(), {'Origin': self.origin, 'Sec-Fetch-Site': 'cross-site'})]:
             with self.assertRaises(HTTPError) as refused:
