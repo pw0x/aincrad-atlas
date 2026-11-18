@@ -1,0 +1,38 @@
+{
+  "castle_wall_slates": {
+    "source": "https://polyhaven.com/a/castle_wall_slates",
+    "license": "CC0-1.0",
+    "maps": {
+      "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/castle_wall_slates/castle_wall_slates_diff_2k.jpg",
+      "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/castle_wall_slates/castle_wall_slates_nor_gl_2k.jpg",
+      "roughness": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/castle_wall_slates/castle_wall_slates_rough_1k.jpg"
+    }
+  },
+  "rock_boulder_dry": {
+    "source": "https://polyhaven.com/a/rock_boulder_dry",
+    "license": "CC0-1.0",
+    "maps": {
+      "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_boulder_dry/rock_boulder_dry_diff_2k.jpg",
+      "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rock_boulder_dry/rock_boulder_dry_nor_gl_2k.jpg",
+      "roughness": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_dry/rock_boulder_dry_rough_1k.jpg"
+    }
+  },
+  "wood_planks": {
+    "source": "https://polyhaven.com/a/wood_planks",
+    "license": "CC0-1.0",
+    "maps": {
+      "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_planks/wood_planks_diff_2k.jpg",
+      "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_planks/wood_planks_nor_gl_2k.jpg",
+      "roughness": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_planks/wood_planks_rough_1k.jpg"
+    }
+  },
+  "wood_table_001": {
+    "source": "https://polyhaven.com/a/wood_table_001",
+    "license": "CC0-1.0",
+    "maps": {
+      "color": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_table_001/wood_table_001_diff_2k.jpg",
+      "normal": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_table_001/wood_table_001_nor_gl_2k.jpg",
+      "roughness": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_rough_1k.jpg"
+    }
+  }
+}

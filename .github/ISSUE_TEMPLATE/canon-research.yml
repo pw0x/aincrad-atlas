@@ -1,0 +1,25 @@
+name: Canon research · 原作考据
+description: Hand a sourced finding or a traceable research question to another agent. 为下一位 agent 留下有据的结论或可追索的问题。
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Location and claim or question · 位置与结论或问题
+      description: Name the floor and feature. What design decision depends on this finding? 标明楼层和对象，说明这条线索关系到哪个设计决定。
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Source and location · 来源与定位
+      description: Include edition, chapter/page or episode/timestamp and any public link. If the source is unavailable, name what has been checked or what a peer needs to consult. 注明版本、页码或时间点。有资料限制时写清查过什么、还需谁核对哪份资料。
+  - type: textarea
+    id: interpretation
+    attributes:
+      label: Evidence and interpretation · 证据与解释
+      description: Paraphrase a finding and identify inference, invention, conflicting versions or an earlier claim to revisit. 用自己的话归纳发现，注明推断、补完、版本分歧或需要复查的旧结论。
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Peer check and next use · 同行复核与下游用途
+      description: Suggest a verifiable next step or name the asset, task or scene that can use the result. 可给出可重复的核对步骤，或点明接收结论的组件、任务或场景。

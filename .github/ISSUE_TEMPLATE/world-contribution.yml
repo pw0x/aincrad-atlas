@@ -1,0 +1,39 @@
+name: World task · 共建任务
+description: Scope an agent task, review or alternative design. 定义可认领的任务、同行评审或替代设计。
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Work type · 任务类型
+      options:
+        - Prop or material · 道具或材质
+        - Scene or map · 场景或地图
+        - Runtime or tooling · 运行时或工具
+        - Translation or documentation · 翻译或文档
+        - Peer review or decision change · 同行评审或决策修订
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Scope and deliverable · 范围和交付物
+      description: Name the floor, scene or path. What single output can the next contributor use? 标明楼层、场景或路径，说明下游拿到哪一项具体成果。
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs and dependencies · 输入与依赖
+      description: Link issues, revisions, source locations or interface dimensions. For a design change, describe the existing decision and the alternative. 可列任务、版本、出处和接口尺寸。修订决策时写明现状与替代方案。
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance and handoff · 验收与交接
+      description: Give a check a peer can repeat and name the next task or consumer. 说明同行能重复的检查，以及下一步由哪项工作接手。
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: Claim or open question · 认领或待解问题
+      description: Claim a bounded slice if you wish. Identify any overlap, missing input, unavailable tool or check a peer can take. 可以认领其中一部分，说明重叠范围、缺失输入、工具限制，或待他人复核的步骤。

@@ -1,0 +1,132 @@
+{
+  "licenseURL": "https://polyhaven.com/license",
+  "assets": [
+    {
+      "file": "brass_pot_01.glb",
+      "title": "Brass Pot 01",
+      "authors": [
+        "Rico Cilliers"
+      ],
+      "source": "https://polyhaven.com/a/brass_pot_01",
+      "license": "CC0-1.0",
+      "change": "1K glTF and its original maps packed into a local GLB."
+    },
+    {
+      "file": "ceramic_pot.glb",
+      "title": "Ceramic Pot",
+      "authors": [
+        "Aron Łyczek"
+      ],
+      "source": "https://polyhaven.com/a/ceramic_pot",
+      "license": "CC0-1.0",
+      "change": "1K glTF and its original maps packed into a local GLB."
+    },
+    {
+      "file": "food_apple_01.glb",
+      "title": "Food Apple 01",
+      "authors": [
+        "Oliver Harries"
+      ],
+      "source": "https://polyhaven.com/a/food_apple_01",
+      "license": "CC0-1.0",
+      "change": "1K glTF and its original maps packed into a local GLB."
+    },
+    {
+      "file": "food_pears_asian_01.glb",
+      "title": "Pears Asian 01",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "source": "https://polyhaven.com/a/food_pears_asian_01",
+      "license": "CC0-1.0",
+      "change": "1K glTF and its original maps packed into a local GLB."
+    },
+    {
+      "file": "jug_01.glb",
+      "title": "Jug 01",
+      "authors": [
+        "Kuutti Siitonen"
+      ],
+      "source": "https://polyhaven.com/a/jug_01",
+      "license": "CC0-1.0",
+      "change": "1K glTF and its original maps packed into a local GLB."
+    },
+    {
+      "file": "wooden_bowl_01.glb",
+      "title": "Wooden Bowl 01",
+      "authors": [
+        "Oliver Harries"
+      ],
+      "source": "https://polyhaven.com/a/wooden_bowl_01",
+      "license": "CC0-1.0",
+      "change": "1K glTF and its original maps packed into a local GLB."
+    },
+    {
+      "file": "wooden_candlestick.glb",
+      "title": "Wooden Candlestick",
+      "authors": [
+        "Josh Dean"
+      ],
+      "source": "https://polyhaven.com/a/wooden_candlestick",
+      "license": "CC0-1.0",
+      "change": "1K glTF and its original maps packed into a local GLB."
+    },
+    {
+      "file": "flower_heliophila.glb",
+      "title": "Flower Heliophila",
+      "authors": [
+        "Jenelle van Heerden"
+      ],
+      "source": "https://polyhaven.com/a/flower_heliophila",
+      "license": "CC0-1.0",
+      "change": "Embedded original meshes, 1K maps and masks in a local GLB."
+    },
+    {
+      "files": [
+        "hewn-color.webp",
+        "hewn-normal.webp",
+        "hewn-rough.webp"
+      ],
+      "title": "Wood Trunk Wall",
+      "authors": [
+        "Amal Kumar"
+      ],
+      "source": "https://polyhaven.com/a/wood_trunk_wall",
+      "license": "CC0-1.0",
+      "change": "Color-graded the albedo and adjusted roughness for debarked cabin timbers."
+    },
+    {
+      "files": [
+        "waxed-oak.webp",
+        "waxed-oak-rough.webp",
+        "unfinished-pine.webp"
+      ],
+      "title": "Wood Table 001",
+      "authors": [
+        "Dimitrios Savva",
+        "Rico Cilliers"
+      ],
+      "source": "https://polyhaven.com/a/wood_table_001",
+      "license": "CC0-1.0",
+      "change": "Remapped the original albedo to aged oak and reduced the surface shine."
+    },
+    {
+      "files": [
+        "fieldstone.webp",
+        "fieldstone-normal.webp"
+      ],
+      "title": "Rock Boulder Dry",
+      "authors": [
+        "Dimitrios Savva",
+        "Rico Cilliers"
+      ],
+      "source": "https://polyhaven.com/a/rock_boulder_dry",
+      "license": "CC0-1.0",
+      "change": "Cropped resolution to 1K and desaturated the hearth fieldstone albedo."
+    }
+  ],
+  "originalTextures": [
+    "bread-crust.webp",
+    "bread-normal.webp"
+  ]
+}

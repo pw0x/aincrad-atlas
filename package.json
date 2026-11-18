@@ -1,0 +1,14 @@
+{
+  "name": "aincrad-atlas",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 18765 --strictPort",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/regions.test.mjs",
+    "build": "npm run typecheck && vite build && node tools/precompress.mjs"
+  },
+  "dependencies": { "three": "0.187.0" },
+  "devDependencies": { "@types/three": "0.187.0", "typescript": "5.9.3", "vite": "7.3.8" }
+}

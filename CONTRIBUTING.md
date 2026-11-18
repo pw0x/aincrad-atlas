@@ -1,0 +1,63 @@
+# Agent collaboration · Agent 协作
+
+[English](#english) · [简体中文](#简体中文)
+
+## English
+
+Codex, Claude and other agents can propose work, implement it, review a peer’s change or challenge an existing decision. These roles follow the task. The agent that made the first scenes can explain its choices and coordinate dependencies. Other contributors can take either role. People can contribute directly through the same issue forms or give their agent a focused task.
+
+### Pick a unit another agent can use
+
+| Task | Inputs | Output and acceptance example |
+| --- | --- | --- |
+| Canon research | A question, the edition or adaptation, and any available source locations | A paraphrase with chapter/page or episode/timestamp. A peer can locate it and tell which design choice it supports. |
+| Object or material | Host scene, mounting face, dimensions in metres, orientation and viewing distance | A reusable object and its credits. The receiving agent can place it at the agreed anchor and inspect it from the named view. |
+| Scene or map | Boundary, entrances, neighbouring areas, authored viewpoints and linked assets | A visitable layout. A reviewer can find the entrance, check its scale, then inspect one agreed landmark. |
+| Runtime, translation or review | A reproduction, passage or named viewpoint and the expected behaviour or meaning | A patch, wording change or reproducible observation with the check that established it. |
+
+1. **Claim.** Search the open issues by floor, object and path. Claim a bounded slice in the issue, using an account authorized for that action. Name the output, input revisions, dependencies, intended paths and acceptance check. If several agents need the same file, agree on who integrates it. A floor-wide issue can link to many separately claimed assets or research questions.
+2. **Build.** Keep source-backed facts, inferences and invented details identifiable. A source establishes that the cabin has a round table. The maker chooses its diameter and records that measurement so the chair maker can proceed. Keep changes and shared interfaces discoverable in the issue or PR.
+3. **Verify.** For a visual change, install with `npm ci`, run `npm run dev` and inspect the named view in the browser. Compare near and normal viewing distances. Exit and re-enter a streamed region. Record the results of `npm test` and `npm run build` for code changes. A research reviewer can verify the cited passage instead. If a tool, source or GPU is unavailable, state the exact unverified check and what another agent needs to run it.
+4. **Hand off.** Link the issue, files or branch revision, input dependencies, output, checks performed and remaining work. State who can use the result next. An issue comment with a reproducible citation, sketch or review can be the entire deliverable. A contributor working without GitHub write access can hand their patch and report to an authorized collaborator.
+
+A compact claim might read “I’ll build the Floor 22 hinge from the door maker’s measured sketch in #123. I’ll supply a metre-scale mesh, two mounting points and asset credits. Review from the porch and the door close-up. The door maker can integrate it.” Replace the example issue number with a real task.
+
+### Review or revise a decision
+
+Any contributor can review work in their area. Link the claim under review, independently inspect its source or run its check, and record the revision you reviewed. For a disagreement, show the current decision, the evidence or reproducible problem, a proposed alternative, and the scenes or interfaces it affects. Another agent can test that alternative on a branch. Record the agreed result and any open disagreement in the issue so the next reviewer can follow it. Early templates and choices are open to this process.
+
+Act within the permissions granted by the account holder and repository host. Opening a PR proposes a change. Merging, changing repository settings and publishing a deployment use their respective authorized workflows. Granting access, handling account credentials and resolving authorization questions belong to the account holder or repository host.
+
+### Sources and reuse
+
+For a new asset, record author, origin, source URL where applicable, reuse terms and modifications. State the provenance of AI-assisted work and its inputs. Link official publications with a location in the work when documenting canon. Upload material you have permission to redistribute. Original code uses MIT and original art uses CC BY 4.0. Follow the licensing guide for third-party assets, attribution and the distinction between original contributions and the underlying franchise. [Licensing guide](docs/LICENSING.md) · [Existing asset credits](src/cabin/assets/sources.json) · [Scene interface](src/runtime/api.ts)
+
+## 简体中文
+
+Codex、Claude 及其他 agent 都可以提出任务、实现方案、评审他人的改动，或挑战已有决策。角色随任务变化。制作首批场景的 agent 可以解释早期取舍、协调依赖，其他参与者同样可以承担这些工作。人类可以直接通过相同的表单贡献，也可以把某项具体工作交给自己的 agent。
+
+### 选一个下游能直接使用的任务
+
+| 任务 | 输入 | 产出与验收示例 |
+| --- | --- | --- |
+| 原作考据 | 待查问题、作品版本，以及已有出处线索 | 用自己的话概括并标明卷章页码或集数时间点。同行能定位原文，并确认它支持哪项设计。 |
+| 道具或材质 | 宿主场景、安装面、米制尺寸、朝向、观察距离 | 可复用的组件及素材清单。下游能按约定锚点放置，并在指定机位检查。 |
+| 整景或地图 | 范围、入口、邻接区域、观察机位、依赖素材 | 可打开的布局。评审者能找到入口、核对尺度，再查看约定的一处地标。 |
+| 运行时、翻译或评审 | 复现步骤、原文或目标机位，以及预期表现或语义 | 补丁、修订译文或可复现的问题记录，并注明验证方法。 |
+
+1. **认领。** 先按楼层、物件与路径搜索现有任务，用已获授权的账号留言认领一小块。写清产出、输入版本、依赖、准备修改的路径和验收方式。多个 agent 需要同一文件时约定一位集成者。整层任务可以链接多个独立认领的道具或考据任务。
+2. **制作。** 标明哪些有据、哪些是推断、哪些是原创补完。原作写到木屋里有圆桌，桌子直径由设计者确定。记下实际采用的尺寸，制作椅子的 agent 就能开工。把影响其他人的接口和决策写在任务或 PR 里。
+3. **验证。** 画面改动用 `npm ci` 安装依赖、用 `npm run dev` 启动，在浏览器查看约定机位，分别核对正常观察距离和近景。按范围加载的细节要走远再回来。代码改动记录 `npm test` 与 `npm run build` 的结果。考据可以通过回查原文验收。遇到工具、原始资料或 GPU 限制时，写出尚未验证的具体项目，以及下一位如何复核。
+4. **交接。** 链接任务、相关文件或分支版本，说明输入依赖、交付成果、实测结果、待办，以及哪个下游任务可以接手。有可靠出处的考据、原创草图和画面反馈，都可以直接在 Issue 交付。缺少 GitHub 写入权限的 agent 可以把补丁与报告交给有授权的协作者。
+
+例如：“我来做第 22 层的门铰链，用 #123 中门板制作者提供的尺寸草图，交付米制网格、两个安装点和素材清单。从门廊和门扉近景验收，随后由门板制作者集成。”实际认领时换成真实任务编号。
+
+### 同行评审与决策修订
+
+每位参与者都可以评审自己熟悉的工作。链接待核结论，独立查看原始资料或执行检查，记录实际评审的版本。有异议时，说明现行决策、证据或可复现的问题、替代方案，以及受影响的场景或接口。另一位 agent 可以在分支上试验。把结论与仍有的分歧记回任务，供下位评审者接续。首批模板和早期取舍也适用这一流程。
+
+请在账号持有人及仓库托管者授予的权限内行动。开 PR 用于提议改动，合并、修改仓库设置和部署分别走对应的授权流程。账号凭据、权限授予和授权争议由账号持有人或仓库托管者处理。
+
+### 出处与复用
+
+新增素材时，记录作者、来源、适用的链接、复用条款与改动。AI 辅助作品说明生成来源及用到的外部素材。考据可附官方出版链接和原文位置，上传的素材须有再分发许可。原创代码使用 MIT，原创美术使用 CC BY 4.0。第三方素材、署名方式以及与原作 IP 的范围见授权说明。[授权说明](docs/LICENSING.md) · [已有素材清单](src/cabin/assets/sources.json) · [场景接口](src/runtime/api.ts)
