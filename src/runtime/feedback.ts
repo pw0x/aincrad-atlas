@@ -59,6 +59,8 @@ export function sceneFeedback(
   let evidence: Evidence
   let receipt: Receipt | null = null
   let busy = false, pollTimer = 0
+  let pollDelay = 2000
+  let pollRequest: AbortController | null = null
   let capture = (): Pick<Evidence, 'camera'|'screenshot'> => ({camera:null,screenshot:null})
   try {
     const saved = JSON.parse(sessionStorage.getItem(key) || 'null') as Submission | null
@@ -88,7 +90,7 @@ export function sceneFeedback(
     history.replaceState(history.state,'',url)
   }
   function openForm() {
-    clearTimeout(pollTimer)
+    pausePolling()
     if (receipt) message.value = ''
     receipt = null
     evidence = pending ?? {
@@ -123,36 +125,60 @@ export function sceneFeedback(
     if (publicLink) issue.href = value.url!
     else issue.removeAttribute('href')
     refresh.hidden = publicLink
-    status.textContent = (publicLink ? '已建立公开任务。' : '反馈已接收，正在等待同步到 GitHub。') + ' 回执 ' + value.id
+    const summary = (publicLink ? '已建立公开任务。' : '反馈已接收，正在等待同步到 GitHub。') + ' 回执 ' + value.id
+    if (status.textContent !== summary) status.textContent = summary
   }
-  async function checkReceipt(attempt = 0) {
-    const id = receipt?.id
-    if (!id) return
+  function pausePolling() {
     clearTimeout(pollTimer)
+    pollRequest?.abort()
+    pollRequest = null
+    refresh.disabled = false
+  }
+  function canPoll() {
+    return !!receipt && !refresh.hidden && dialog.open && !document.hidden && !signal.aborted
+  }
+  function schedulePoll(delay:number) {
+    clearTimeout(pollTimer)
+    if (canPoll()) pollTimer = window.setTimeout(() => void checkReceipt(),delay)
+  }
+  async function checkReceipt() {
+    const id = receipt?.id
+    if (!id || !canPoll() || pollRequest) return
+    clearTimeout(pollTimer)
+    const request = new AbortController()
+    pollRequest = request
+    const timeout = window.setTimeout(() => request.abort(),10000)
     refresh.disabled = true
     try {
-      const response = await fetch('/api/feedback/'+id, {cache:'no-store',signal:AbortSignal.timeout(10000)})
+      const response = await fetch('/api/feedback/'+id, {cache:'no-store',signal:request.signal})
+      if (pollRequest !== request) return
       if (response.status === 404) {
-        if (receipt?.id === id) status.textContent = '没有找到这条回执，请核对链接。 回执 '+id
+        refresh.hidden = true
+        status.textContent = '没有找到这条回执，请核对链接。 回执 '+id
         return
       }
       if (!response.ok) throw Error()
       const result = await response.json() as Receipt
       if (result.id !== id) throw Error()
-      if (receipt?.id !== id) return
-      renderReceipt(result)
+      if (pollRequest === request) renderReceipt(result)
     } catch {
-      if (receipt?.id === id) status.textContent = '暂时查不到这条回执。可保存链接，稍后再查看。 回执 '+id
-    } finally { refresh.disabled = false }
-    if (dialog.open && receipt?.id === id && issue.hidden && attempt < 5) {
-      pollTimer = window.setTimeout(() => void checkReceipt(attempt+1), Math.min(15000,2000*(attempt+1)))
+      if (pollRequest === request) status.textContent = '暂时查不到这条回执。服务恢复后会继续查询。 回执 '+id
+    } finally {
+      clearTimeout(timeout)
+      if (pollRequest === request) {
+        pollRequest = null
+        refresh.disabled = false
+        schedulePoll(pollDelay)
+        pollDelay = Math.min(30000,pollDelay*2)
+      }
     }
   }
   function accept(value:Receipt) {
     persist(null)
     renderReceipt(value)
     replaceParam('receipt',value.id)
-    if (dialog.open && issue.hidden) pollTimer = window.setTimeout(() => void checkReceipt(),1500)
+    pollDelay = 2000
+    schedulePoll(1500)
   }
   async function send(event:SubmitEvent) {
     event.preventDefault()
@@ -198,10 +224,14 @@ export function sceneFeedback(
   trigger.onclick = () => {
     if (!busy && !receipt) return openForm()
     if (!dialog.open) dialog.showModal()
-    if (receipt && issue.hidden) void checkReceipt()
+    void checkReceipt()
   }
   get('#feedback-close').onclick = () => dialog.close()
-  dialog.addEventListener('close', () => { clearTimeout(pollTimer) }, {signal})
+  dialog.addEventListener('close', () => { if (!dialog.open) pausePolling() }, {signal})
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) pausePolling()
+    else void checkReceipt()
+  },{signal})
   message.oninput = () => message.setCustomValidity('')
   form.addEventListener('submit',send,{signal})
   refresh.onclick = () => void checkReceipt()
@@ -227,7 +257,7 @@ export function sceneFeedback(
     a.href = href; a.download = 'aincrad-feedback-'+world+'.json'; a.click()
     window.setTimeout(() => URL.revokeObjectURL(href),1000)
   }
-  signal.addEventListener('abort',() => clearTimeout(pollTimer),{once:true})
+  signal.addEventListener('abort',pausePolling,{once:true})
   const requestedReceipt = query.get('receipt')
   if (requestedReceipt && receiptPattern.test(requestedReceipt)) {
     renderReceipt({id:requestedReceipt,status:'queued'})

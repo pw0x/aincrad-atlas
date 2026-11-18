@@ -6,7 +6,7 @@ import os
 import re
 import sys
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode, urlsplit
+from urllib.parse import quote, urlencode, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 
@@ -53,33 +53,50 @@ def github(path, token=None, body=None):
 
 def progress(repo, token=None):
     commits = github(f'/repos/{repo}/commits?sha=main&per_page=8', token)
-    query = urlencode({'q': f'repo:{repo} is:issue is:open label:agent-ready', 'sort': 'updated',
-                       'order': 'desc', 'per_page': 12})
-    issues = github('/search/issues?' + query, token)
-    if issues.get('incomplete_results'):
-        raise ValueError('Incomplete GitHub task search')
     changes = [{'sha': c['sha'], 'title': c['commit']['message'].split('\n', 1)[0][:220],
                 'url': c['html_url'], 'date': c['commit']['committer']['date']} for c in commits]
-    tasks = [{'number': i['number'], 'title': i['title'][:220], 'url': i['html_url'], 'date': i['updated_at'],
-              'labels': [label['name'] for label in i['labels']]} for i in issues['items']]
-    return {'changes': changes, 'tasks': tasks, 'openTaskCount': issues['total_count'],
+    # The repository listing reflects newly dispatched issues before GitHub's search index catches up.
+    tasks, numbers = [], set()
+    for page in range(1, 31):
+        query = urlencode({'state': 'open', 'labels': 'agent-ready', 'sort': 'updated', 'direction': 'desc',
+                           'per_page': 100, 'page': page})
+        rows = github(f'/repos/{repo}/issues?' + query, token)
+        for row in rows:
+            number = row['number']
+            if 'pull_request' in row or number in numbers:
+                continue
+            numbers.add(number)
+            if len(tasks) < 12:
+                tasks.append({'number': number, 'title': row['title'][:220], 'url': row['html_url'],
+                              'date': row['updated_at'], 'labels': [label['name'] for label in row['labels']]})
+        if len(rows) < 100:
+            break
+    else:
+        raise ValueError('Incomplete GitHub task listing')  # Keep the previous complete snapshot.
+    return {'changes': changes, 'tasks': tasks, 'openTaskCount': len(numbers),
             'updatedAt': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
 
 
 def ensure_labels(repo, token):
     for name, color, desc in [('visitor-feedback', 'd9a25f', 'Observation submitted from a public Atlas scene'),
-                              ('agent-ready', '44786a', 'Available for a peer agent to claim and verify')]:
+                              ('agent-ready', '44786a', 'Available for a peer agent to claim and verify'),
+                              ('scene:castle', '708abd', 'Floating castle exterior'),
+                              ('scene:town', 'c38655', 'Floor 1 Town of Beginnings'),
+                              ('scene:cabin', '73966c', 'Floor 22 lakeside cabin')]:
+        path = f'/repos/{repo}/labels/' + quote(name, safe='')
         try:
-            github(f'/repos/{repo}/labels/{name}', token)
+            github(path, token)
         except HTTPError as err:
             if err.code != 404:
                 raise
+            err.close()
             try:
                 github(f'/repos/{repo}/labels', token, {'name': name, 'color': color, 'description': desc})
             except HTTPError as conflict:
                 if conflict.code != 422:
                     raise
-                github(f'/repos/{repo}/labels/{name}', token)
+                conflict.close()
+                github(path, token)
 
 
 def existing_issue(repo, token, job):
