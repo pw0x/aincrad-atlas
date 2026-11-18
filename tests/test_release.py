@@ -11,10 +11,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'deploy'))
 import receive
 
 
-def archive(run=1, extra=None):
+def archive(run=1, extra=None, previous_layout=False):
     data = io.BytesIO()
     with tarfile.open(fileobj=data, mode='w', format=tarfile.USTAR_FORMAT) as tar:
-        entries = {p: b'release' for p in receive.REQUIRED}
+        entries = {p: b'release' for p in ('server/atlas.py', 'dist/index.html', 'dist/floor-01.html', 'dist/floor-22.html')}
+        if previous_layout:
+            for name in ('dist/portal.html', 'server/feedback.py', 'server/dispatcher.py'):
+                entries[name] = b'previous release'
         entries['deploy-run.txt'] = str(run).encode()
         entries['dist/assets/scene-Abc_12xY.js'] = b'const scene = true'
         for path, content in entries.items():
@@ -57,17 +60,19 @@ class ReleaseTests(unittest.TestCase):
         restarted = []
         def restart():
             restarted.append(receive.current_release(self.root).name)
-        receive.publish(self.root, archive(1), one, restart, lambda sha: True)
+        receive.publish(self.root, archive(1, previous_layout=True), one, restart, lambda sha: True)
         self.assertEqual(restarted, [one])
         with self.assertRaisesRegex(RuntimeError, 'health check'):
             receive.publish(self.root, archive(2), two, restart, lambda sha: sha == one)
         self.assertEqual(restarted, [one, two, one])
         self.assertEqual(receive.current_release(self.root).name, one)
+        self.assertTrue((self.root / 'current/dist/portal.html').exists())
         self.assertEqual((self.root / 'current-run').read_text(), '1\n')
         receive.publish(self.root, archive(2), two, restart, lambda sha: True)
         receive.publish(self.root, archive(3), two, restart, lambda sha: True)
         self.assertEqual(restarted, [one, two, one, two])
         self.assertEqual((self.root / 'current/revision.env').read_text(), f'ATLAS_VERSION={two}\n')
+        self.assertFalse((self.root / 'current/dist/portal.html').exists())
         asset = self.root / 'assets/scene-Abc_12xY.js'
         current_asset = self.root / 'current/dist/assets' / asset.name
         self.assertTrue(os.path.samefile(asset, current_asset))

@@ -5,7 +5,7 @@ from html.parser import HTMLParser
 import json
 import re
 import sys
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
@@ -40,7 +40,7 @@ class SameOrigin(HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def check(origin, expected, require_fresh):
+def check(origin, expected):
     parts = urlsplit(origin)
     local = parts.scheme == 'http' and parts.hostname in ('127.0.0.1', 'localhost', '::1')
     if not ((parts.scheme == 'https' or local) and parts.hostname and parts.path in ('', '/')
@@ -62,66 +62,74 @@ def check(origin, expected, require_fresh):
                 raise ValueError(f'{url} returned HTTP {response.status}')
             return response.headers.get_content_type(), response.read(512 if sample else 1024 * 1024)
 
-    def api(path):
-        mime, data = get(path, 'application/json')
-        if mime != 'application/json':
-            raise ValueError(f'{path} returned {mime}')
-        return json.loads(data)
-
     assets = {}
-    for page, world in (('/', None), ('/index.html', 'castle'), ('/floor-01.html', 'town'), ('/floor-22.html', 'cabin')):
+    scripts_by_page = {}
+    for page, world in (('/', 'castle'), ('/index.html', 'castle'), ('/floor-01.html', 'town'), ('/floor-22.html', 'cabin')):
         mime, raw = get(page, 'text/html')
         doc = Page()
         doc.feed(raw.decode('utf-8'))
-        if mime != 'text/html' or world != doc.world or 'script' not in doc.assets.values():
+        if mime != 'text/html' or world != doc.world or 'atlas' not in doc.ids or 'script' not in doc.assets.values():
             raise ValueError('Unexpected scene or document at ' + page)
-        if world is None and not {'scenes', 'progress', 'feedback'} <= doc.ids:
-            raise ValueError('The root document is missing a portal section')
+        scripts_by_page[page] = set()
         for path, kind in doc.assets.items():
-            assets[urljoin(urljoin(origin, page), path)] = kind
+            url = urljoin(urljoin(origin, page), path)
+            assets[url] = kind
+            if kind == 'script':
+                scripts_by_page[page].add(url)
     types = {'script': {'application/javascript', 'text/javascript', 'application/ecmascript'},
              'style': {'text/css'}, 'image': {'image/jpeg', 'image/png', 'image/webp', 'image/avif'}}
+    join_scripts = set()
     for url, kind in assets.items():
-        mime, sample = get(url, '*/*', sample=True)
+        mime, sample = get(url, '*/*', sample=kind != 'script')
         if not sample or mime not in types[kind] or sample.lstrip().lower().startswith((b'<!doctype html', b'<html')):
             raise ValueError(f'{url} returned an invalid {kind} ({mime})')
-    print(f'Portal, three scenes and {len(assets)} directly referenced assets passed.')
-    version = api('/api/version')['version']
+        if kind == 'script' and all(marker in sample for marker in
+                (b'join-agent', b'join-copy', b'git clone https://github.com/pw0x/aincrad-atlas.git')):
+            join_scripts.add(url)
+    for page, scripts in scripts_by_page.items():
+        if not scripts.intersection(join_scripts):
+            raise ValueError(f'{page} lacks the viewer bundle with the agent prompt and copy control.')
+
+    legacy_url = urljoin(origin, '/portal.html?lang=en')
+    try:
+        with http.open(legacy_url, timeout=15) as response:
+            destination = response.geturl()
+    except HTTPError as err:
+        # Python versions before 3.11 expose HTTP 308 without following it.
+        if err.code != 308:
+            raise
+        destination = urljoin(legacy_url, err.headers.get('Location', ''))
+        err.close()
+    if destination != urljoin(origin, '/?lang=en'):
+        raise ValueError('The old portal link did not redirect to the scene root with its query.')
+    for retired in ('/api/progress', '/api/feedback', '/api/worker/lease'):
+        try:
+            with http.open(urljoin(origin, retired), timeout=15):
+                raise ValueError('Retired route is still public: ' + retired)
+        except HTTPError as err:
+            if err.code not in (404, 410):
+                raise
+            err.close()
+
+    mime, data = get('/api/version', 'application/json')
+    if mime != 'application/json':
+        raise ValueError(f'The version endpoint returned {mime}')
+    version = json.loads(data)['version']
     if not isinstance(version, str) or not re.fullmatch('[a-f0-9]{40}', version):
         raise ValueError('The deployment did not identify a full source commit.')
     if expected and not version.startswith(expected.lower()):
         raise ValueError(f'Expected {expected}, found {version}.')
-    progress = api('/api/progress')
-    if progress.get('version') != version or not progress.get('updatedAt'):
-        raise ValueError('Progress is missing an update date or has a different deployment revision.')
-    source = progress.get('source')
-    if source not in ('cached', 'github') or (require_fresh and source != 'github'):
-        raise ValueError('Progress source is ' + str(source))
-    changes, tasks, count = progress['changes'], progress['tasks'], progress['openTaskCount']
-    repo = 'https://github.com/pw0x/aincrad-atlas'
-    if progress.get('repository') != repo or not isinstance(changes, list) or not changes:
-        raise ValueError('No traceable repository history in the progress feed.')
-    if not isinstance(tasks, list) or type(count) is not int or count < len(tasks):
-        raise ValueError('The task list and task count disagree.')
-    for entry in changes:
-        sha = entry['sha']
-        if not re.fullmatch('[a-f0-9]{40}', sha) or not entry['title'] or entry['url'] != f'{repo}/commit/{sha}':
-            raise ValueError('A change is missing its commit reference or title.')
-    for entry in tasks:
-        if not entry['title'] or entry['url'] != f'{repo}/issues/{entry["number"]}' or 'agent-ready' not in entry['labels']:
-            raise ValueError('A task is missing its issue reference, title or dispatch label.')
-    print(f'{version}: {len(changes)} recent changes, {count} open tasks, {source} as of {progress["updatedAt"]}.')
+    print(f'{version}: castle at the root, three previews, agent prompt, {len(assets)} linked assets and legacy redirects verified.')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('origin', help='e.g. https://aincrad.pw0studio.com')
     parser.add_argument('--expect-commit', help='expected Git SHA or prefix of at least seven characters')
-    parser.add_argument('--require-fresh', action='store_true', help='also fail if GitHub data is marked stale')
     args = parser.parse_args()
     if args.expect_commit and not re.fullmatch('[a-fA-F0-9]{7,40}', args.expect_commit):
         parser.error('--expect-commit needs 7 to 40 hexadecimal characters')
     try:
-        check(args.origin, args.expect_commit, args.require_fresh)
+        check(args.origin, args.expect_commit)
     except (OSError, URLError, KeyError, ValueError, TypeError) as err:
         sys.exit('Public check failed: ' + str(err))

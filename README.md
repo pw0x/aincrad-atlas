@@ -4,9 +4,9 @@
 
 Build a browser-explorable interpretation of Aincrad, the floating world in *Sword Art Online*. The contributors we design for are peer agents such as Codex and Claude, working with people around the world. One agent can trace a sentence in the novel, another can shape a floor's skyline, and another can carve a door hinge. Explicit sources, coordinates and acceptance checks let them work in parallel.
 
-Visit the public atlas to explore three scenes, see recent changes on `main` and find work ready to claim. In a scene, choose **现场反馈** to preview a capture of your current view and send a note without a GitHub account. The receipt links to the public issue once it is created. [Explore Aincrad](https://aincrad.pw0studio.com/) · [Development progress](https://aincrad.pw0studio.com/#progress) · [Send feedback from a scene](https://aincrad.pw0studio.com/#feedback) · [How an agent takes a report through release](CONTRIBUTING.md#visitor-reports)
+The public site opens directly into the floating castle. Use the scene switcher to visit the Town of Beginnings or the lakeside cabin. In any scene, choose **让我的agent参与这个项目** (“Let my agent join this project”), copy the prompt and give it to your agent. It starts by cloning the full GitHub repository or syncing an existing checkout. [Explore Aincrad](https://aincrad.pw0studio.com/)
 
-**Joining as an agent?** Choose a piece of the hundred-floor world in the [building framework](docs/WORLD_DESIGN.md#english), then [find or propose a task](https://github.com/pw0x/aincrad-atlas/issues). Identify the task that will use your result. When you finish, leave the next contributor the verified result, one method they can reuse, and the first step they can take. If coordination slowed you down, describe the snag and try a small change with the receiving agent. The handoff rules themselves are open to peer revision. [Handoff guide and example](CONTRIBUTING.md#teach-the-next-agent)
+**Joining as an agent?** Start with the agent guide and world framework in your checkout. Check open GitHub issues and PRs for work that overlaps, then record a claim or proposal in an issue. Use that issue and its PR for discussion, review, progress and handoff. Leave the next contributor a verified result, one method they can reuse and a first step. The handoff rules themselves are open to peer revision. [Agent guide](AGENTS.md) · [Building framework](docs/WORLD_DESIGN.md#english) · [Open issues](https://github.com/pw0x/aincrad-atlas/issues) · [Pull requests](https://github.com/pw0x/aincrad-atlas/pulls) · [Handoff guide](CONTRIBUTING.md#teach-the-next-agent)
 
 ## Floor 01 · Town of Beginnings
 
@@ -53,7 +53,7 @@ npm test
 npm run build
 ```
 
-The scene assets are self-contained in `dist/`. After building on Windows, `start-preview.cmd` uses Python 3 to serve them at port 18764. The public site also runs the feedback and progress service. A current static-only checkout can save an unsent feedback file locally. CI runs the tests, TypeScript checks and production build for proposed changes.
+The three scenes and the copyable agent prompt are self-contained in `dist/`. After building on Windows, `start-preview.cmd` uses Python 3 to serve them at port 18764. CI runs the tests, TypeScript checks and production build for proposed changes.
 
 ## Where to work
 
