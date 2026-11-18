@@ -6,7 +6,8 @@ import type { View, WorldContext } from './runtime/api'
 import { shell, type World } from './runtime/shell'
 import './style.css'
 
-const world: World = document.documentElement.dataset.world === 'cabin' ? 'cabin' : 'castle'
+const requestedWorld = document.documentElement.dataset.world
+const world: World = requestedWorld === 'cabin' || requestedWorld === 'town' ? requestedWorld : 'castle'
 const ui = shell(world)
 const abort = new AbortController()
 
@@ -47,7 +48,7 @@ async function start() {
     finish.size()
   }
   fit()
-  const sources = import.meta.glob<{build(ctx: WorldContext): Promise<{views: View[]}>}>('./{castle,cabin}/index.js')
+  const sources = import.meta.glob<{build(ctx: WorldContext): Promise<{views: View[]}>}>('./{castle,cabin,town}/index.js')
   const module = await sources['./'+world+'/index.js']()
   const result = await module.build(ctx)
   const views: View[] = result.views

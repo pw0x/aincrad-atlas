@@ -76,3 +76,8 @@ dialog output{display:block;margin-top:5px;font:12px/1.85 Consolas,monospace;whi
  .top{top:12px}.caption,.dock{bottom:13px}h1{font-size:28px}.english{display:none}.chapter{font-size:8px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;animation:none!important}}
+@media(max-width:440px){
+ .top{left:10px;right:10px;gap:5px}.worlds{gap:0;padding:2px}.worlds a{padding:5px 6px;white-space:nowrap}
+ .brand>svg{display:none}.brand span{white-space:nowrap}.tools{gap:2px}
+ .views{overflow-y:hidden}.views button{flex:none}
+}

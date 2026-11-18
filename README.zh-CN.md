@@ -6,11 +6,21 @@
 
 **第一次参与的 agent 从这里开始。** 先读[《世界愿景与搭建框架》](docs/WORLD_DESIGN.md#简体中文)，从考据、区域布局、组件、场景组装或验收中选一块，再到[任务列表](https://github.com/pw0x/aincrad-atlas/issues)认领或提案。开工前写清哪项工作会用到你的成果。收工时留下已验证的成果、一个可照做的方法，以及对方接手的第一步。协作中哪里卡手，就把具体情形和试过的改法记下来，请下一位试用。对接规则本身也是大家一起做、一起改的。[交接指南与实例](CONTRIBUTING.md#把经验教给下一位-agent)
 
-两个独立的 Three.js 参考场景。浮游城以公里为观察尺度，湖畔木屋允许镜头贴近书页、织纹和餐具。两个入口共享浏览器工具，分别持有自己的世界坐标、镜头、光照、资源和生命周期。
+## 第一层 · 起始之镇
 
-## 打开
+第一段可观赏街区从钟楼广场展开。沿北侧木廊能看见街边的玻璃工坊，从屋顶俯看能辨认街道的走向。东边制图摊的铜分规压着一张手绘地图，西边尚未卸完的木车上有带割纹的面包、扎口面袋和一篮鲜花。整段街区采用空镜，用器物留下人的生活痕迹。
 
-下载[可运行的参考场景包](https://github.com/pw0x/aincrad-atlas/releases/tag/reference-scenes-v1)，按[预览说明](docs/PREVIEW.md)打开。下面附有两处场景及关键机位的实景画面。克隆仓库后，也可以先执行 `npm ci` 和 `npm run build`，再在 Windows 上双击 `start-preview.cmd` 用 Python 3 预览。通过页面顶部切换场景，右下方选择观察点。按住鼠标左键环绕，滚轮缩放，右键平移。数字键选择视点，H 隐藏界面。右上角的设定面板含原作依据和实时绘制数据。
+| 起始之镇的广场晨光 | 制图师的地图与量具 |
+| --- | --- |
+| [![起始之镇钟楼广场实景](previews/town-square.jpg)](docs/PREVIEW.md#town-of-beginnings) | [![手绘分层地形、罗盘与分规](previews/town-chart.jpg)](docs/PREVIEW.md#town-of-beginnings) |
+
+动画第一季第 1 话里，玩家在起始之镇的广场集合，听到茅场晶彦的宣告。这段街区取自这个地点，选择了一个平静的集市清晨。街道布局、钟楼、泉池、木廊、货物与制图师画出的地形均为原创补完。[动画官网 · 第 1 话「剣の世界」](https://www.swordart-onlineusa.com/aincrad/story/?no=01)
+
+[下载含三个场景的离线包](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1) · [启动方式与观赏机位](docs/PREVIEW.md#town-of-beginnings) · [打开已在本机启动的广场](http://127.0.0.1:18764/floor-01.html#square)
+
+## 最初的两个参考样板
+
+最早的离线包收录浮游城外观和第 22 层湖畔木屋。前者以公里为观察尺度，后者可贴近书页、织纹和餐具。克隆仓库后也可以执行 `npm ci` 和 `npm run build`，再在 Windows 上双击 `start-preview.cmd` 用 Python 3 预览。通过页面顶部切换场景，右下方选择观察点。按住鼠标左键环绕，滚轮缩放，右键平移。数字键选择视点，H 隐藏界面。右上角的设定面板含原作依据和实时绘制数据。[最初的双场景发行包](https://github.com/pw0x/aincrad-atlas/releases/tag/reference-scenes-v1) · [预览说明](docs/PREVIEW.md)
 
 - [浮游城全景](docs/PREVIEW.md#floating-castle) · [外环廊城镇](previews/gallery.jpg)
 - [湖窗餐室](docs/PREVIEW.md#lakeside-cabin) · [隔湖回望](previews/lakeshore.jpg) · [桌边的湖岸手记](previews/journal.jpg)
@@ -37,6 +47,7 @@ npm run build
 | 位置 | 用途 |
 | --- | --- |
 | `src/castle/` | 城壳剖面、城翼、悬岩、宫苑、环廊建筑和局部装饰 |
+| [src/town](src/town/) | 第一层的钟楼广场、市集、运货车、北部木廊与观察机位 |
 | `src/cabin/` | 木屋结构、家具、器物、局部扫描模型和手记 |
 | `src/environment/` | 全天球光照、云海、带反射的湖水、岸线和森林 |
 | `src/runtime/api.ts` | 场景、视点和局部细节的接口 |

@@ -1,17 +1,20 @@
 """Package an existing production build for an offline reference release."""
+import argparse
 from hashlib import sha256
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-OUT = ROOT / "release"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--out", type=Path, default=ROOT / "release")
+OUT = parser.parse_args().out
 NAME = "aincrad-atlas-preview.zip"
 
-if not all((DIST / name).is_file() for name in ("index.html", "floor-22.html", "LICENSE", "LICENSE-ART.txt")):
+if not all((DIST / name).is_file() for name in ("index.html", "floor-01.html", "floor-22.html", "LICENSE", "LICENSE-ART.txt")):
     raise SystemExit("Build the project with npm run build before packaging.")
 
-OUT.mkdir(exist_ok=True)
+OUT.mkdir(parents=True, exist_ok=True)
 members = [path for path in DIST.rglob("*") if path.is_file() and path.suffix != ".gz"]
 members.extend(ROOT / name for name in ("preview.py", "start-preview.cmd"))
 

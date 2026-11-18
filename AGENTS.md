@@ -15,6 +15,7 @@ Start with **World vision and building framework** to see how canon research, re
 | Responsibility | Entry points and units |
 | --- | --- |
 | Castle exterior and its districts | `src/castle/` and `index.html`, metres, Y up |
+| Floor 1 town square and market | `src/town/` and `floor-01.html`, fountain at the origin, clock hall north (−Z), map seller east (+X) |
 | Floor 22 cabin and its furnishings | `src/cabin/` and `floor-22.html`, metres, Y up |
 | Shared daylight, clouds, water and landscape | `src/environment/`; put scene-specific loads in the relevant scene |
 | Streaming and renderer | `src/runtime/api.ts`, `resources.ts` and `finish.ts` |

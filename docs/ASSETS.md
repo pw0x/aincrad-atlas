@@ -14,7 +14,8 @@ Project-authored code is available under MIT. Original artwork, including the jo
 | Cabin · 木屋 | Scanned cookware, tableware, fruit and flowers, plus adapted timber and stone textures · 扫描炊具、餐具、水果、花卉，以及调色后的木石材质 | [Artists, asset links and changes · 作者、来源与修改](../src/cabin/assets/sources.json) |
 | Environment · 环境 | HDR sky, photographed branches, rendered tree views, mossy rocks, grasses and shoreline textures · HDR 天空、实拍枝叶、树木远景、苔石、草叶和湖岸纹理 | [Sources and production notes · 来源与制作说明](../src/environment/assets/CREDITS.md) |
 | Journal · 湖岸手记 | Project-drawn lake map and botanical plate · 本项目绘制的湖岸地图与植物图版 | [Illustration source · 图版生成脚本](../artwork/draw-journal.py) |
-| Previews · 项目预览图 | Browser captures of the two scenes, including the palace, hearth and journal · 两个场景的浏览器实景画面，包括红玉宫、石炉与手记 | [Preview images · 实景截图](../previews/) |
+| Floor 1 · 起始之镇 | Contributors authored the buildings, glasswork, signs, cart and tools. The sky and leaf clusters use the environment credits above. The map counter reuses the cabin’s adapted Wood Table 001 texture. · 建筑、花窗、旗纹、货车与制图工具均为项目原创，摊面沿用木屋的橡木纹理。 | [Map artwork · 制图师底稿](../src/town/market-chart.py) · [Paving · 铺石纹理](../artwork/draw-town-paving.py) · [Oak credits · 木纹出处](../src/cabin/assets/sources.json) |
+| Previews · 项目预览图 | Browser captures of the castle, town square and lakeside home · 浮城、起始之镇与湖畔木屋的浏览器实景 | [Preview images · 实景截图](../previews/) |
 
 Poly Haven publishes its downloadable models, textures and HDRIs under CC0. The source records above identify the assets used here and retain the artists' names where available. [Poly Haven asset licence](https://polyhaven.com/license)
 

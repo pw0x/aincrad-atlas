@@ -1,6 +1,6 @@
 # Environment assets
 
-Both scenes use [Kloofendal 48d Partly Cloudy (Pure Sky)](https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky) from Poly Haven. The sky display uses a locally tone-mapped 2048 × 1024 WebP. A separate 512 × 256 Radiance HDR preserves unclipped sunlight for environment lighting.
+The castle, town square and lakeside cabin use [Kloofendal 48d Partly Cloudy (Pure Sky)](https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky) from Poly Haven. The sky display uses a locally tone-mapped 2048 × 1024 WebP. A separate 512 × 256 Radiance HDR preserves unclipped sunlight for environment lighting.
 
 The four cumulus silhouettes were baked from procedural three-dimensional density and directional light transmission using the included `bake-clouds.py`. They complement the runtime cloud volume.
 
