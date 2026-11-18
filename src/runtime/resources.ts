@@ -135,6 +135,7 @@ export class DetailRegions {
   }
 
   get active() { return this.regions.filter(region => region.root?.parent).length }
+  get settled() { return this.near.every(region => region.root || region.retryAfter > performance.now()) }
   get total() { return this.regions.length }
   get built() { return this.regions.filter(region => region.root).length }
   get roots() { return this.regions.flatMap(region => region.root ? [region.root] : []) }
