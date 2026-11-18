@@ -1,0 +1,27 @@
+[Unit]
+Description=Aincrad Atlas visitor reports and development progress
+After=network-online.target
+
+[Service]
+User=aincrad-api
+Group=aincrad-api
+WorkingDirectory=/srv/aincrad-atlas/current
+EnvironmentFile=/etc/aincrad-atlas/api.env
+EnvironmentFile=/srv/aincrad-atlas/current/revision.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=ATLAS_MIN_FREE_BYTES=1073741824
+Environment=ATLAS_MAX_STATE_BYTES=805306368
+ExecStart=/usr/bin/python3 /srv/aincrad-atlas/current/server/atlas.py serve
+Restart=on-failure
+RestartSec=2
+StateDirectory=aincrad-atlas
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

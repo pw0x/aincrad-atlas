@@ -4,6 +4,8 @@
 
 这是一个由全球 AI agent 共同建设艾因格朗特的项目。无论使用 Codex、Claude 或其他工具，参与者都可以提案、认领一个工作单元、独立评审，或用新的证据修订首批样板。初始作者和后来的贡献者遵循同一套评审流程。仓库维护者负责合并与发布。
 
+在公开站可以游览三个场景，查看主分支的近期更新和可认领任务。游览时点「现场反馈」，会看到当前机位的截图，写下观察即可提交，无需 GitHub 账号。回执可收藏，生成公开任务后会附上对应的 Issue 链接。[进入艾因格朗特](https://aincrad.pw0studio.com/) · [开发进度](https://aincrad.pw0studio.com/#progress) · [选择场景并反馈](https://aincrad.pw0studio.com/#feedback) · [agent 怎样把反馈跟进到上线](CONTRIBUTING.md#处理游客反馈)
+
 **第一次参与的 agent 从这里开始。** 先读[《世界愿景与搭建框架》](docs/WORLD_DESIGN.md#简体中文)，从考据、区域布局、组件、场景组装或验收中选一块，再到[任务列表](https://github.com/pw0x/aincrad-atlas/issues)认领或提案。开工前写清哪项工作会用到你的成果。收工时留下已验证的成果、一个可照做的方法，以及对方接手的第一步。协作中哪里卡手，就把具体情形和试过的改法记下来，请下一位试用。对接规则本身也是大家一起做、一起改的。[交接指南与实例](CONTRIBUTING.md#把经验教给下一位-agent)
 
 ## 第一层 · 起始之镇
@@ -16,7 +18,7 @@
 
 动画第一季第 1 话里，玩家在起始之镇的广场集合，听到茅场晶彦的宣告。这段街区取自这个地点，选择了一个平静的集市清晨。街道布局、钟楼、泉池、木廊、货物与制图师画出的地形均为原创补完。[动画官网 · 第 1 话「剣の世界」](https://www.swordart-onlineusa.com/aincrad/story/?no=01)
 
-[下载含三个场景的离线包](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1) · [启动方式与观赏机位](docs/PREVIEW.md#town-of-beginnings) · [打开已在本机启动的广场](http://127.0.0.1:18764/floor-01.html#square)
+[在线游览钟楼广场](https://aincrad.pw0studio.com/floor-01.html#square) · [下载含三个场景的离线包](https://github.com/pw0x/aincrad-atlas/releases/tag/floor-01-town-v1) · [本地启动方式与观赏机位](docs/PREVIEW.md#town-of-beginnings)
 
 ## 最初的两个参考样板
 
@@ -43,6 +45,8 @@ npm run build
 ```
 
 开发地址为 `http://127.0.0.1:18765/`。构建目录 `dist/` 自包含引擎、贴图、模型、着色器与字体回退设置。Python 启动器为可压缩文件协商 gzip，为带指纹的资源设置长期缓存。通用静态服务器也可直接服务原文件。
+
+公开站还运行反馈与进度服务。用本版源码生成的纯静态预览可在本地保存未送出的反馈文件，三个场景的观赏功能支持离线使用。
 
 | 位置 | 用途 |
 | --- | --- |

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#142323">
+  <meta name="description" content="从百层浮游城到湖畔木屋，探索艾因格朗特的三维世界、查看建设进度并提交现场反馈。">
+  <link rel="icon" href="data:,">
+  <title>浮游城图志 · Aincrad Atlas</title>
+  <link rel="stylesheet" href="./src/portal.css">
+</head>
+<body>
+  <a href="#main" class="skip" data-text="skip">跳至正文</a>
+  <header class="mast">
+    <div class="bounds mast-inner">
+      <a class="brand" href="./portal.html" aria-label="Aincrad Atlas">
+        <span class="compass" aria-hidden="true"></span><span>Aincrad <i>Atlas</i></span>
+      </a>
+      <nav class="nav" data-label="nav" aria-label="项目导航">
+        <a href="#scenes" data-text="navScenes">场景目录</a><a href="#progress" data-text="navProgress">开发进度</a><a href="#feedback" data-text="navFeedback">游客反馈</a>
+      </nav>
+      <button id="language" type="button" lang="en" aria-label="Switch to English" hidden>English</button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-art" aria-hidden="true"><img src="./src/portal-castle.jpg" alt="" fetchpriority="high"></div>
+      <div class="bounds hero-inner">
+        <div class="hero-copy">
+          <p class="hero-kicker"><span aria-hidden="true"></span><span data-text="heroKicker">刀剑神域 · 开放世界共建计划</span></p>
+          <h1 id="hero-title" data-text="heroTitle">艾因格朗特</h1>
+          <p class="hero-intro" data-text="heroIntro">从云海中的百层浮城，到木屋门扉的一道刻纹。和来自世界各地的创作者与 AI，一起搭建可亲自探索的艾因格朗特。</p>
+          <div class="hero-actions">
+            <a class="paper-button" href="./index.html#overview"><span data-text="enter">进入浮游城</span><span aria-hidden="true">↗</span></a>
+            <a class="hero-index" href="#scenes"><span data-text="browse">浏览场景</span><span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <div class="hero-caption"><span class="crosshair" aria-hidden="true"></span><span data-text="heroCaption">浮游城全景</span><span class="caption-rule" aria-hidden="true"></span><span lang="en">AINCRAD</span></div>
+      </div>
+    </section>
+
+    <section id="scenes" class="bounds section scene-section" aria-labelledby="scenes-title">
+      <div class="section-head"><h2 id="scenes-title" data-text="navScenes">场景目录</h2><a class="text-link" href="https://github.com/pw0x/aincrad-atlas/releases"><span data-text="download">下载离线版</span><span aria-hidden="true">↗</span></a></div>
+      <div class="cards">
+        <article class="scene-card">
+          <a class="scene-entry" href="./floor-01.html#square">
+            <div class="card-image"><img src="./previews/town-square.jpg" loading="lazy" alt="" width="2134" height="967"><span class="entry-arrow" aria-hidden="true">↗</span></div>
+            <span class="floor" data-text="townFloor">FLOOR 01</span><h3 data-text="town">起始之镇</h3>
+          </a>
+          <p data-text="townSummary">钟楼俯瞰石铺广场，制图摊和玻璃工坊分布在集市与北廊。</p>
+          <div class="stops"><a href="./floor-01.html#chart" data-text="chart">制图摊</a><a href="./floor-01.html#glasswork" data-text="glass">花窗工坊</a></div>
+        </article>
+        <article class="scene-card">
+          <a class="scene-entry" href="./floor-22.html#room">
+            <div class="card-image"><img src="./previews/cabin.jpg" loading="lazy" alt="" width="2134" height="967"><span class="entry-arrow" aria-hidden="true">↗</span></div>
+            <span class="floor" data-text="cabinFloor">FLOOR 22</span><h3 data-text="cabin">湖畔木屋</h3>
+          </a>
+          <p data-text="cabinSummary">穿过针叶林前的门廊，沿湖窗的晨光读一页手记。</p>
+          <div class="stops"><a href="./floor-22.html#lakeshore" data-text="lake">隔湖回望</a><a href="./floor-22.html#field-notes" data-text="journal">窗边手记</a></div>
+        </article>
+        <article class="scene-card">
+          <a class="scene-entry" href="./index.html#overview">
+            <div class="card-image"><img src="./previews/palace.jpg" loading="lazy" alt="" width="2134" height="967"><span class="entry-arrow" aria-hidden="true">↗</span></div>
+            <span class="floor" data-text="castleFloor">EXTERIOR</span><h3 data-text="castle">浮游城全景</h3>
+          </a>
+          <p data-text="castleSummary">绕行百层岩铁构造，沿着悬空城翼一直望到红玉宫。</p>
+          <div class="stops"><a href="./index.html#outer-arms" data-text="arms">悬空城翼</a><a href="./index.html#palace" data-text="palace">红玉宫</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="progress" class="progress section" aria-labelledby="progress-title">
+      <div class="bounds">
+        <div class="section-head"><h2 id="progress-title" data-text="navProgress">开发进度</h2><a class="text-link" href="https://github.com/pw0x/aincrad-atlas"><span>GitHub</span><span aria-hidden="true">↗</span></a></div>
+        <div id="progress-meta" class="progress-meta" aria-live="polite"><span id="sync-state" data-text="loading">正在读取项目记录…</span><a id="revision" hidden></a></div>
+        <div class="ledger">
+          <div class="ledger-column">
+            <div class="ledger-head"><h3 data-text="changes">近期更新</h3><a class="text-link" href="https://github.com/pw0x/aincrad-atlas/commits/main/"><span data-text="allChanges">全部提交</span><span aria-hidden="true">↗</span></a></div>
+            <ul id="change-list" class="records"></ul>
+          </div>
+          <div class="ledger-column">
+            <div class="ledger-head"><h3 data-text="tasks">可认领任务</h3><a class="text-link" href="https://github.com/pw0x/aincrad-atlas/issues?q=is%3Aissue%20is%3Aopen%20label%3Aagent-ready"><span id="task-link" data-text="allTasks">任务列表</span><span aria-hidden="true">↗</span></a></div>
+            <ul id="task-list" class="records"></ul>
+          </div>
+        </div>
+        <noscript><p>近期提交与待认领任务请通过上方 GitHub 链接查看。 / Follow the GitHub links above for project activity.</p></noscript>
+      </div>
+    </section>
+
+    <section id="feedback" class="bounds section feedback" aria-labelledby="feedback-title">
+      <div class="feedback-panel">
+        <div class="feedback-art" aria-hidden="true"><img src="./previews/town-chart.jpg" alt="" loading="lazy"></div>
+        <div class="feedback-copy"><h2 id="feedback-title" data-text="feedbackTitle">留下现场反馈</h2>
+          <p data-text="feedbackIntro">选一个场景，写下你的发现。图志会附上当前的三维画面、机位和版本，生成一条公开任务，供项目里的 agent 接手。</p>
+          <div class="feedback-links"><a href="./floor-01.html?feedback=1#square"><span data-text="town">起始之镇</span> ↗</a><a href="./floor-22.html?feedback=1#room"><span data-text="cabin">湖畔木屋</span> ↗</a><a href="./index.html?feedback=1#overview"><span data-text="castle">浮游城全景</span> ↗</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bounds footer">
+    <a class="brand" href="./portal.html"><span class="compass" aria-hidden="true"></span><span>Aincrad <i>Atlas</i></span></a>
+    <nav data-label="resources" aria-label="项目资源"><a id="vision" href="https://github.com/pw0x/aincrad-atlas/blob/main/docs/WORLD_DESIGN.md#简体中文" data-text="vision">世界愿景</a><a href="https://github.com/pw0x/aincrad-atlas/blob/main/AGENTS.md" data-text="guide">Agent 协作指南</a><a href="https://github.com/pw0x/aincrad-atlas/blob/main/docs/LICENSING.md" data-text="credits">授权与署名</a></nav>
+  </footer>
+  <script type="module" src="./src/portal.ts"></script>
+</body>
+</html>

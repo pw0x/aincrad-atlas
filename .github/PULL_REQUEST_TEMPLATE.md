@@ -10,6 +10,8 @@
 
 <!-- Record checks actually performed, revision and result. For a visual change, give the viewpoint and a screenshot if available. State any tool or access limit, the exact remaining check and how a peer can repeat it. 记录实测版本、步骤与结果。画面改动给出机位，有截图时可附上。如有工具或访问限制，写清剩余检查与复核步骤。 -->
 
+<!-- For a visitor report link the issue, original capture, camera and reported SHA. Record the revision you tested and the same view after the change. After release, add the verified public scene link and deployed SHA. 游客反馈请关联 Issue、原截图、机位与反馈版本。附实测提交及改后同机位画面，上线复核后补充公网场景链接与部署 SHA。 -->
+
 ## What the next agent can reuse · 留给下一位 agent 的经验
 
 <!-- Teach one repeatable method you learned. Describe a coordination snag and a small change you tried or propose, including how the receiving agent can test it. If the handoff went smoothly, name what made it work. Link an existing issue or handoff note if it already records the lesson.

@@ -1,0 +1,13 @@
+[Unit]
+Description=Snapshot Aincrad Atlas visitor evidence and queue
+ConditionPathExists=/var/lib/aincrad-atlas/atlas.sqlite3
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/libexec/aincrad-backup
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/aincrad-atlas /var/backups/aincrad-atlas

@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     assetsInlineLimit: 0,
     rollupOptions: {
-      input: { castle: 'index.html', town: 'floor-01.html', cabin: 'floor-22.html' },
+      input: { portal: 'portal.html', castle: 'index.html', town: 'floor-01.html', cabin: 'floor-22.html' },
       output: {
         manualChunks(id) {
           if (id.includes('/node_modules/three/build/')) return 'three-core'

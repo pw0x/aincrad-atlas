@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily Aincrad Atlas database snapshot
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=20m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
